@@ -43,7 +43,7 @@ class ContentDetails(object):
         self._playlistItem = playlistItem
         self._recommendation = recommendation
         self._bulletin = bulletin
-        self.social = social
+        self._social = social
         self.channelItem = channelItem
         self.parse()
 
@@ -56,6 +56,7 @@ class ContentDetails(object):
         self.playlistItem = create_or_none(PlayListItem, self._playlistItem)
         self.recommendation = create_or_none(Recommendation, self._recommendation)
         self.bulletin = create_or_none(Bulletin, self._bulletin)
+        self.social = create_or_none(Social, self._social)
 
 
 class Thumbnail(object):
@@ -100,20 +101,29 @@ class Comment(HasResourceMixin):
 
 class PlayListItem(HasResourceMixin):
     def __init__(self, resourceId=None, playlistId=None, playlistItemId=None):
-        super(PlayListItem, self).__init__(resourceId)
+        super(PlayListItem, self).__init__(resourceId=resourceId)
         self.playlistId = playlistId
         self.playlistItemId = playlistItemId
 
 
 class Recommendation(HasResourceMixin):
     def __init__(self, resourceId=None, reason=None, seedResourceId=None):
-        super(Recommendation, self).__init__(resourceId)
+        super(Recommendation, self).__init__(resourceId=resourceId)
         self.reason = reason
         self.seedResourceID = seedResourceId
 
 
 class Bulletin(HasResourceMixin):
     pass
+
+
+class Social(HasResourceMixin):
+    def __init__(self, resourceId=None, type=None, author=None, referenceUrl=None, imageUrl=None):
+        super(Social, self).__init__(resourceId=resourceId)
+        self.type = type
+        self.author = author
+        self.referenceUrl = referenceUrl
+        self.imageUrl = imageUrl
 
 
 __author__ = 'lalo'
