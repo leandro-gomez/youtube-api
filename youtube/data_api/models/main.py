@@ -20,7 +20,7 @@ class Activity(object):
         return unicode(self.__str__())
 
     def __str__(self):
-        return "Activity(kind= {kind},id:= {id} )".format(kind=self.kind, id=self.id)
+        return "Activity(kind={kind},id={id} )".format(kind=self.kind, id=self.id)
 
     def __repr__(self):
         return self.__str__()
