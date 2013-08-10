@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from .models.main import Activity
-from .utils import youtube_get, create_error
+from models.main import Activity
+from utils import youtube_get, create_error
 
 ACTIVITIES_URL = "https://www.googleapis.com/youtube/v3/activities/"
 

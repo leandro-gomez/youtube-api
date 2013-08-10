@@ -81,7 +81,11 @@ class Upload(object):
 
 class HasResourceMixin(object):
     def __init__(self, resourceId=None):
-        self.resourceId = resourceId
+        self._resourceId = resourceId
+        self.parse()
+
+    def parse(self):
+        self.resourceId = create_or_none(ResourceId, **self._resourceId)
 
 
 class Like(HasResourceMixin):
@@ -129,6 +133,14 @@ class Social(HasResourceMixin):
 
 class ChannelItem(HasResourceMixin):
     pass
+
+
+class ResourceId(object):
+    def __init__(self, kind=None, videoId=None, channelId=None, playlistId=None):
+        self.kind = kind
+        self.videoId = videoId
+        self.channelId = channelId
+        self.playlistId = playlistId
 
 
 __author__ = 'lalo'
