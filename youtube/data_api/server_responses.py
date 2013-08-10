@@ -68,10 +68,14 @@ class Channels(Resource):
     def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None):
         self.kind = kind
         self.etag = etag
-        self.pageInfo = pageInfo
+        self._pageInfo = pageInfo
         self.nextPageToken = nextPageToken
         self.prevPageToken = prevPageToken
         self.items = items or []
+        self.parse()
+
+    def parse(self):
+        self.pageInfo = create_or_none(PageInfo, self._pageInfo)
 
 
 __author__ = 'lalo'
