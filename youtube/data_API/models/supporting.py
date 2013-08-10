@@ -37,7 +37,7 @@ class ContentDetails(object):
                  playlistItem=None, recommendation=None, bulletin=None, social=None, channelItem=None):
         self._upload = upload
         self._like = like
-        self.favorite = favorite
+        self._favorite = favorite
         self.comment = comment
         self.subscription = subscription
         self.playlistItem = playlistItem
@@ -49,7 +49,8 @@ class ContentDetails(object):
 
     def parse(self):
         self.upload = create_or_none(Upload, self._upload)
-        self.like= create_or_none(Like, self._like)
+        self.like = create_or_none(Like, self._like)
+        self.favorite = create_or_none(Favorite, self._favorite)
 
 
 class Thumbnail(object):
@@ -77,6 +78,10 @@ class HasResourceMixin(object):
 
 
 class Like(HasResourceMixin):
+    pass
+
+
+class Favorite(HasResourceMixin):
     pass
 
 
