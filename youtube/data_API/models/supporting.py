@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import iso8601
+from youtube.data_API.utils import create_or_none
 
 
 class Snippet(object):
@@ -34,7 +35,7 @@ class Snippet(object):
 class ContentDetails(object):
     def __init__(self, upload=None, like=None, favorite=None, comment=None, subscription=None,
                  playlistItem=None, recommendation=None, bulletin=None, social=None, channelItem=None):
-        self.upload = upload
+        self._upload = upload
         self.like = like
         self.favorite = favorite
         self.comment = comment
@@ -44,6 +45,10 @@ class ContentDetails(object):
         self.bulletin = bulletin
         self.social = social
         self.channelItem = channelItem
+        self.parse()
+
+    def parse(self):
+        self.upload = create_or_none(Upload, self._upload)
 
 
 class Thumbnail(object):
@@ -58,6 +63,11 @@ class Thumbnail(object):
         for k, v in elements.iteritems():
             parsed[k] = cls(**v)
         return parsed
+
+
+class Upload(object):
+    def __init__(self, videoId=None):
+        self.videoId = videoId
 
 
 __author__ = 'lalo'
