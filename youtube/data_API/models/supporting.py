@@ -44,7 +44,7 @@ class ContentDetails(object):
         self._recommendation = recommendation
         self._bulletin = bulletin
         self._social = social
-        self.channelItem = channelItem
+        self._channelItem = channelItem
         self.parse()
 
     def parse(self):
@@ -57,6 +57,7 @@ class ContentDetails(object):
         self.recommendation = create_or_none(Recommendation, self._recommendation)
         self.bulletin = create_or_none(Bulletin, self._bulletin)
         self.social = create_or_none(Social, self._social)
+        self.channelItem = create_or_none(ChannelItem, self._channelItem)
 
 
 class Thumbnail(object):
@@ -124,6 +125,10 @@ class Social(HasResourceMixin):
         self.author = author
         self.referenceUrl = referenceUrl
         self.imageUrl = imageUrl
+
+
+class ChannelItem(HasResourceMixin):
+    pass
 
 
 __author__ = 'lalo'
