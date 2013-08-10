@@ -22,7 +22,7 @@ def extra_kwargs_warning(kwargs):
         print "Warning: this method has receive extra params: {extra}".format(extra=kwargs)
 
 
-def create_error(response):
+def error_factory(response):
     return YouTubeException(response)
 
 
