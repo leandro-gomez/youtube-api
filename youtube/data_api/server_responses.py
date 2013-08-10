@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from models.main import Activity
+from resources.main import Activity
 from utils import youtube_get, create_error, create_or_none, extra_kwargs_warning
-from youtube.data_api.models.supporting import PageInfo
+from youtube.data_api.resources.supporting import PageInfo
 
 ACTIVITIES_URL = "https://www.googleapis.com/youtube/v3/activities/"
 
@@ -23,8 +23,10 @@ class Activities(object):
         self.pageInfo = create_or_none(PageInfo, self._pageInfo)
 
     @classmethod
-    def list(cls, part, channelId=None, home=None, maxResults=None, mine=None, pageToken=None, publishedAfter=None,
+    def list(cls, part, channelId=None, home=None, maxResults=None,
+             mine=None, pageToken=None, publishedAfter=None,
              publishedBefore=None, regionCode=None, fields=None, **kwargs):
+        
         extra_kwargs_warning(kwargs)
         response = youtube_get(ACTIVITIES_URL, part=part, channelId=channelId, home=home, maxResults=maxResults,
                                mine=mine, pageToken=pageToken, publishedAfter=publishedAfter,
