@@ -17,7 +17,13 @@ class Activity(object):
         self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
 
     def __unicode__(self):
-        return self.kind, self.etag
+        return unicode(self.__str__())
+
+    def __str__(self):
+        return "Activity(kind= {kind},id:= {id} )".format(kind=self.kind, id=self.id)
+
+    def __repr__(self):
+        return self.__str__()
 
 
 __author__ = 'lalo'

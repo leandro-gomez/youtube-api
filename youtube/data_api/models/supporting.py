@@ -143,4 +143,10 @@ class ResourceId(object):
         self.playlistId = playlistId
 
 
+class PageInfo(object):
+    def __init__(self, totalResults=None, resultsPerPage=None):
+        self.totalResults = totalResults
+        self.resultsPerPage = resultsPerPage
+
+
 __author__ = 'lalo'
