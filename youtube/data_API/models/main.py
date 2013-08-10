@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 from youtube.data_API.models.supporting import Snippet, ContentDetails
-
-
-def create_or_none(cls, value):
-    if value:
-        return cls(**value)
-    else:
-        return None
+from youtube.data_API.utils import create_or_none
 
 
 class Activity(object):

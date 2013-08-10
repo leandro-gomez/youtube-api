@@ -5,6 +5,13 @@ from youtube.settings import API_KEY
 import json
 
 
+def create_or_none(cls, value):
+    if value:
+        return cls(**value)
+    else:
+        return None
+
+
 def get_default_params():
     params = {'key': API_KEY, 'headers': {'content-type': 'application/json'}}
     return params

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+import iso8601
 
 
 class Snippet(object):
     def __init__(self, publishedAt=None, channelId=None, title=None, description=None,
                  thumbnails=None, channelTitle=None, type=None, groupId=None):
-        self.publishedAt = publishedAt
+        self._publishedAt = publishedAt
         self.channelId = channelId
         self.title = title
         self.description = description
@@ -12,6 +13,13 @@ class Snippet(object):
         self.channelTitle = channelTitle
         self.type = type
         self.groupId = groupId
+        self.parse()
+
+    def parse(self):
+        publishedAt = self._publishedAt
+        if publishedAt:
+            publishedAt = iso8601.parse_date(publishedAt)
+            self.publishedAt = publishedAt
 
 
 class ContentDetails(object):
