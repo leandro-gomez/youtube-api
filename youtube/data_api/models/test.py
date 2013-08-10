@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from youtube.data_API.server_responses import Activities
+from youtube.data_api.server_responses import Activities
 
 
 def test():

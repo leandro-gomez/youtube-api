@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from youtube.data_API.models.supporting import Snippet, ContentDetails
-from youtube.data_API.utils import create_or_none
+from youtube.data_api.models.supporting import Snippet, ContentDetails
+from youtube.data_api.utils import create_or_none
 
 
 class Activity(object):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import iso8601
-from youtube.data_API.utils import create_or_none
+from youtube.data_api.utils import create_or_none
 
 
 class Snippet(object):
