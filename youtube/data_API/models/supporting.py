@@ -38,7 +38,7 @@ class ContentDetails(object):
         self._upload = upload
         self._like = like
         self._favorite = favorite
-        self.comment = comment
+        self._comment = comment
         self._subscription = subscription
         self.playlistItem = playlistItem
         self.recommendation = recommendation
@@ -52,6 +52,7 @@ class ContentDetails(object):
         self.like = create_or_none(Like, self._like)
         self.favorite = create_or_none(Favorite, self._favorite)
         self.subscription = create_or_none(Subscription, self._subscription)
+        self.comment = create_or_none(Comment, self._comment)
 
 
 class Thumbnail(object):
@@ -87,6 +88,10 @@ class Favorite(HasResourceMixin):
 
 
 class Subscription(HasResourceMixin):
+    pass
+
+
+class Comment(HasResourceMixin):
     pass
 
 
