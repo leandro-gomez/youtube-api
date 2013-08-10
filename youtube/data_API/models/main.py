@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-from youtube.data_API.models.supporting import Snippet
+from youtube.data_API.models.supporting import Snippet, ContentDetails
+
+
+def create_or_none(cls, value):
+    if value:
+        return cls(**value)
+    else:
+        return None
 
 
 class Activity(object):
@@ -8,11 +15,12 @@ class Activity(object):
         self.etag = etag
         self.id = id
         self._snippet = snippet
-        self.contentDetails = contentDetails
+        self._contentDetails = contentDetails
         self.parse()
 
     def parse(self):
-        self.snippet = Snippet(**self._snippet)
+        self.snippet = create_or_none(Snippet, self._snippet)
+        self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
 
     def __unicode__(self):
         return self.kind, self.etag

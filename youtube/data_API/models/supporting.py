@@ -14,4 +14,19 @@ class Snippet(object):
         self.groupId = groupId
 
 
+class ContentDetails(object):
+    def __init__(self, upload=None, like=None, favorite=None, comment=None, subscription=None,
+                 playlistItem=None, recommendation=None, bulletin=None, social=None, channelItem=None):
+        self.upload = upload
+        self.like = like
+        self.favorite = favorite
+        self.comment = comment
+        self.subscription = subscription
+        self.playlistItem = playlistItem
+        self.recommendation = recommendation
+        self.bulletin = bulletin
+        self.social = social
+        self.channelItem = channelItem
+
+
 __author__ = 'lalo'
