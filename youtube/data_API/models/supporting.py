@@ -42,7 +42,7 @@ class ContentDetails(object):
         self._subscription = subscription
         self._playlistItem = playlistItem
         self._recommendation = recommendation
-        self.bulletin = bulletin
+        self._bulletin = bulletin
         self.social = social
         self.channelItem = channelItem
         self.parse()
@@ -55,6 +55,7 @@ class ContentDetails(object):
         self.comment = create_or_none(Comment, self._comment)
         self.playlistItem = create_or_none(PlayListItem, self._playlistItem)
         self.recommendation = create_or_none(Recommendation, self._recommendation)
+        self.bulletin = create_or_none(Bulletin, self._bulletin)
 
 
 class Thumbnail(object):
@@ -109,6 +110,10 @@ class Recommendation(HasResourceMixin):
         super(Recommendation, self).__init__(resourceId)
         self.reason = reason
         self.seedResourceID = seedResourceId
+
+
+class Bulletin(HasResourceMixin):
+    pass
 
 
 __author__ = 'lalo'
