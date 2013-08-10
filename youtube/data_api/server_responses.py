@@ -20,7 +20,7 @@ class Activities(object):
         items = self._items
         self.items = [Activity(**item) for item in items]
 
-        self._pageInfo = create_or_none(PageInfo, **self._pageInfo)
+        self.pageInfo = create_or_none(PageInfo, self._pageInfo)
 
     @classmethod
     def list(cls, **kwargs):
