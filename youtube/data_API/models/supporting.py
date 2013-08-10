@@ -36,7 +36,7 @@ class ContentDetails(object):
     def __init__(self, upload=None, like=None, favorite=None, comment=None, subscription=None,
                  playlistItem=None, recommendation=None, bulletin=None, social=None, channelItem=None):
         self._upload = upload
-        self.like = like
+        self._like = like
         self.favorite = favorite
         self.comment = comment
         self.subscription = subscription
@@ -49,6 +49,7 @@ class ContentDetails(object):
 
     def parse(self):
         self.upload = create_or_none(Upload, self._upload)
+        self.like= create_or_none(Like, self._like)
 
 
 class Thumbnail(object):
@@ -68,6 +69,15 @@ class Thumbnail(object):
 class Upload(object):
     def __init__(self, videoId=None):
         self.videoId = videoId
+
+
+class HasResourceMixin(object):
+    def __init__(self, resourceId=None):
+        self.resourceId = resourceId
+
+
+class Like(HasResourceMixin):
+    pass
 
 
 __author__ = 'lalo'
