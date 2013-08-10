@@ -34,14 +34,23 @@ def parse(response, to_python=True):
     return json_response
 
 
+def get_non_none_kwargs(kwargs):
+    return dict((k, v) for k, v in kwargs.iteritems() if v is not None)
+
+
+def get_params(kwargs):
+    params = get_default_params()
+    non_none_params = get_non_none_kwargs(kwargs)
+    params.update(non_none_params)
+    return params
+
+
 def youtube_get(url, **kwargs):
     to_python = kwargs.pop('to_python', True)
 
-    params = get_default_params()
-    non_none_params = dict((k, v) for k, v in kwargs.iteritems() if v is not None)
-    params.update(non_none_params)
-    response = requests.get(url, params=params)
+    params = get_params(kwargs)
 
+    response = requests.get(url, params=params)
     response = parse(response, to_python)
     return response
 

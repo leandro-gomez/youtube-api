@@ -26,7 +26,7 @@ class Activities(object):
     def list(cls, part, channelId=None, home=None, maxResults=None,
              mine=None, pageToken=None, publishedAfter=None,
              publishedBefore=None, regionCode=None, fields=None, **kwargs):
-        
+
         extra_kwargs_warning(kwargs)
         response = youtube_get(ACTIVITIES_URL, part=part, channelId=channelId, home=home, maxResults=maxResults,
                                mine=mine, pageToken=pageToken, publishedAfter=publishedAfter,
