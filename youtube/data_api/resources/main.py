@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from youtube.data_api.resources.supporting import Snippet, ContentDetails, Statistics, TopicDetails, Status, BrandingSettings, InvideoPromotion
+from youtube.data_api.resources.main_supporting import (
+    Snippet, ContentDetails, InvideoPromotion,
+    BrandingSettings, Status, TopicDetails, Statistics, )
 from youtube.data_api.utils import create_or_none
 
 
