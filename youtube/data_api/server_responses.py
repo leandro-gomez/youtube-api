@@ -38,9 +38,11 @@ class Resource(object):
 
 
 class Activities(Resource):
-    accepted = ['channelId', 'home', 'maxResults',
-                'mine', 'pageToken', 'publishedAfter',
-                'publishedBefore', 'regionCode', 'fields']
+    accepted = [
+        'channelId', 'home', 'maxResults',
+        'mine', 'pageToken', 'publishedAfter',
+        'publishedBefore', 'regionCode', 'fields',
+    ]
 
     url = ACTIVITIES_URL
 
@@ -62,8 +64,12 @@ class Activities(Resource):
 
 class Channels(Resource):
     url = CHANNELS_URL
-    accepted = ['categoryId', 'forUsername', 'id', 'managedByMe', 'mine', 'mySubscribers',
-                'maxResults', 'onBehalfOfContentOwner', 'pageToken', 'fields']
+    accepted = [
+        'categoryId', 'forUsername', 'id',
+        'managedByMe', 'mine', 'mySubscribers',
+        'maxResults', 'onBehalfOfContentOwner',
+        'pageToken', 'fields',
+    ]
 
     def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None):
         self.kind = kind
