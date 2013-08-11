@@ -109,6 +109,19 @@ class SmallBrandedBannerImageUrl(HasDefaultLocalizedMixin):
     pass
 
 
+class Hint(object):
+    def __init__(self, property=None, value=None):
+        self.property = property
+        self.value = value
+
+    @classmethod
+    def parse(cls, elements):
+        hints = []
+        for hint in elements:
+            hints.append(cls(**hint))
+        return hints
+
+
 class Image(object):
     def __init__(self, bannerImageUrl=None, bannerMobileImageUrl=None, backgroundImageUrl=None,
                  largeBrandedBannerImageImapScript=None, largeBrandedBannerImageUrl=None,
@@ -136,7 +149,7 @@ class Image(object):
         self.bannerMobileExtraHdImageUrl = bannerMobileExtraHdImageUrl
         self.bannerTvImageUrl = bannerTvImageUrl
         self.bannerExternalUrl = bannerExternalUrl
-        self.hints = hints
+        self._hints = hints
         self.parse()
 
     def parse(self):
@@ -146,7 +159,15 @@ class Image(object):
         self.largeBrandedBannerImageUrl = create_or_none(LargeBrandedBannerImageUrl, self._largeBrandedBannerImageUrl)
         self.smallBrandedBannerImageImapScript = create_or_none(SmallBrandedBannerImageImapScript,
                                                                 self._smallBrandedBannerImageImapScript)
-        self.smallBrandedBannerImageUrl=create_or_none(SmallBrandedBannerImageUrl, self._smallBrandedBannerImageUrl)
+        self.smallBrandedBannerImageUrl = create_or_none(SmallBrandedBannerImageUrl, self._smallBrandedBannerImageUrl)
+        self.parse_hints()
+
+    def parse_hints(self):
+        hints = self._hints
+        if hints:
+            self.hints = Hint.parse(hints)
+        else:
+            self.hints = None
 
 
 class Watch(object):
@@ -161,13 +182,21 @@ class BrandingSettings(object):
         self._channel = channel
         self._watch = watch
         self._image = image
-        self.hints = hints
+        self._hints = hints
         self.parse()
 
     def parse(self):
         self.channel = create_or_none(Channel, self._channel)
         self.watch = create_or_none(Watch, self._watch)
         self.image = create_or_none(Image, self._image)
+        self.parse_hints()
+
+    def parse_hints(self):
+        hints = self._hints
+        if hints:
+            self.hints = Hint.parse(hints)
+        else:
+            self.hints = None
 
 
 class Status(object):
@@ -309,5 +338,6 @@ class InvideoPromotion(object):
     def parse(self):
         self.timing = create_or_none(Timing, self._timing)
         self.position = create_or_none(Position, self._position)
+
 
 __author__ = 'lalo'
