@@ -46,7 +46,7 @@ class ContentDetails(object):
         self._bulletin = bulletin
         self._social = social
         self._channelItem = channelItem
-        self.relatedPlaylists = relatedPlaylists
+        self._relatedPlaylists = relatedPlaylists
         self.googlePlusUserId = googlePlusUserId
         self.parse()
 
@@ -61,6 +61,7 @@ class ContentDetails(object):
         self.bulletin = create_or_none(Bulletin, self._bulletin)
         self.social = create_or_none(Social, self._social)
         self.channelItem = create_or_none(ChannelItem, self._channelItem)
+        self.relatedPlaylists = create_or_none(RelatedPlaylists, self._relatedPlaylists)
 
 
 class Channel(object):
@@ -118,11 +119,11 @@ class Image(object):
                  bannerMobileExtraHdImageUrl=None, bannerTvImageUrl=None, bannerExternalUrl=None, hints=None):
         self.bannerImageUrl = bannerImageUrl
         self.bannerMobileImageUrl = bannerMobileImageUrl
-        self.backgroundImageUrl = backgroundImageUrl
-        self.largeBrandedBannerImageImapScript = largeBrandedBannerImageImapScript
-        self.largeBrandedBannerImageUrl = largeBrandedBannerImageUrl
-        self.smallBrandedBannerImageImapScript = smallBrandedBannerImageImapScript
-        self.smallBrandedBannerImageUrl = smallBrandedBannerImageUrl
+        self._backgroundImageUrl = backgroundImageUrl
+        self._largeBrandedBannerImageImapScript = largeBrandedBannerImageImapScript
+        self._largeBrandedBannerImageUrl = largeBrandedBannerImageUrl
+        self._smallBrandedBannerImageImapScript = smallBrandedBannerImageImapScript
+        self._smallBrandedBannerImageUrl = smallBrandedBannerImageUrl
         self.watchIconImageUrl = watchIconImageUrl
         self.trackingImageUrl = trackingImageUrl
         self.bannerTabletLowImageUrl = bannerTabletLowImageUrl
@@ -136,6 +137,16 @@ class Image(object):
         self.bannerTvImageUrl = bannerTvImageUrl
         self.bannerExternalUrl = bannerExternalUrl
         self.hints = hints
+        self.parse()
+
+    def parse(self):
+        self.backgroundImageUrl = create_or_none(BackgroundImageUrl, self._backgroundImageUrl)
+        self.largeBrandedBannerImageImapScript = create_or_none(LargeBrandedBannerImageImapScript,
+                                                                self._largeBrandedBannerImageImapScript)
+        self.largeBrandedBannerImageUrl = create_or_none(LargeBrandedBannerImageUrl, self._largeBrandedBannerImageUrl)
+        self.smallBrandedBannerImageImapScript = create_or_none(SmallBrandedBannerImageImapScript,
+                                                                self._smallBrandedBannerImageImapScript)
+        self.smallBrandedBannerImageUrl=create_or_none(SmallBrandedBannerImageUrl, self._smallBrandedBannerImageUrl)
 
 
 class Watch(object):
@@ -147,10 +158,16 @@ class Watch(object):
 
 class BrandingSettings(object):
     def __init__(self, channel=None, watch=None, image=None, hints=None):
-        self.channel = channel
-        self.watch = watch
-        self.image = image
+        self._channel = channel
+        self._watch = watch
+        self._image = image
         self.hints = hints
+        self.parse()
+
+    def parse(self):
+        self.channel = create_or_none(Channel, self._channel)
+        self.watch = create_or_none(Watch, self._watch)
+        self.image = create_or_none(Image, self._image)
 
 
 class Status(object):
@@ -284,9 +301,13 @@ class Position(object):
 
 class InvideoPromotion(object):
     def __init__(self, timing=None, position=None, items=None):
-        self.timing = timing
-        self.position = position
+        self._timing = timing
+        self._position = position
         self.items = items
+        self.parse()
 
+    def parse(self):
+        self.timing = create_or_none(Timing, self._timing)
+        self.position = create_or_none(Position, self._position)
 
 __author__ = 'lalo'
