@@ -20,7 +20,7 @@ class Resource(object):
     def pop_extras(cls, kwargs):
         accepted = cls.accepted
         extras = dict()
-        for key in kwargs:
+        for key in kwargs.copy():
             if key not in accepted:
                 extras[key] = kwargs.pop(key)
         return extras

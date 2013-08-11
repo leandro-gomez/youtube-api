@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import warnings
 import requests
 from youtube.data_api.exceptions import YouTubeException
 from youtube.settings import API_KEY
@@ -19,7 +20,8 @@ def get_default_params():
 
 def extra_kwargs_warning(kwargs):
     if kwargs:
-        print "Warning: this method has receive extra params: {extra}".format(extra=kwargs)
+        message = "This method has receive extra params: {extra}".format(extra=kwargs)
+        warnings.warn(message, SyntaxWarning)
 
 
 def error_factory(response):
