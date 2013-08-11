@@ -146,10 +146,11 @@ class Watch(object):
 
 
 class BrandingSettings(object):
-    def __init__(self, channel=None, watch=None, image=None):
+    def __init__(self, channel=None, watch=None, image=None, hints=None):
         self.channel = channel
         self.watch = watch
         self.image = image
+        self.hints = hints
 
 
 class Status(object):

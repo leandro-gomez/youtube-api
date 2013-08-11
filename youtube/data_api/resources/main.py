@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from youtube.data_api.resources.supporting import Snippet, ContentDetails
+from youtube.data_api.resources.supporting import Snippet, ContentDetails, Statistics, TopicDetails, Status, BrandingSettings, InvideoPromotion
 from youtube.data_api.utils import create_or_none
 
 
@@ -33,13 +33,23 @@ class Channel(object):
         self.kind = kind
         self.etag = etag
         self.id = id
-        self.snippet = snippet
-        self.contentDetails = contentDetails
-        self.statistics = statistics
-        self.topicDetails = topicDetails
-        self.status =status
-        self.brandingSettings = brandingSettings
-        self.invideoPromotion = invideoPromotion
+        self._snippet = snippet
+        self._contentDetails = contentDetails
+        self._statistics = statistics
+        self._topicDetails = topicDetails
+        self._status = status
+        self._brandingSettings = brandingSettings
+        self._invideoPromotion = invideoPromotion
+        self.parse()
+
+    def parse(self):
+        self.snippet = create_or_none(Snippet, self._snippet)
+        self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
+        self.statistics = create_or_none(Statistics, self._statistics)
+        self.topicDetails = create_or_none(TopicDetails, self._topicDetails)
+        self.status = create_or_none(Status, self._status)
+        self.brandingSettings = create_or_none(BrandingSettings, self._brandingSettings)
+        self.invideoPromotion = create_or_none(InvideoPromotion, self._invideoPromotion)
 
 
 __author__ = 'lalo'
