@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.main import Activity
+from resources.main import Activity, Channel
 from utils import youtube_get, error_factory, create_or_none, extra_kwargs_warning
 from youtube.data_api.resources.supporting import PageInfo
 
@@ -71,10 +71,12 @@ class Channels(Resource):
         self._pageInfo = pageInfo
         self.nextPageToken = nextPageToken
         self.prevPageToken = prevPageToken
-        self.items = items or []
+        self._items = items or []
         self.parse()
 
     def parse(self):
+        items = self._items
+        self.items = [Channel(**item) for item in items]
         self.pageInfo = create_or_none(PageInfo, self._pageInfo)
 
 

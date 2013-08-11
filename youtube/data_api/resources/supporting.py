@@ -34,7 +34,8 @@ class Snippet(object):
 
 class ContentDetails(object):
     def __init__(self, upload=None, like=None, favorite=None, comment=None, subscription=None,
-                 playlistItem=None, recommendation=None, bulletin=None, social=None, channelItem=None):
+                 playlistItem=None, recommendation=None, bulletin=None, social=None,
+                 channelItem=None, relatedPlaylists=None, googlePlusUserId=None):
         self._upload = upload
         self._like = like
         self._favorite = favorite
@@ -45,6 +46,8 @@ class ContentDetails(object):
         self._bulletin = bulletin
         self._social = social
         self._channelItem = channelItem
+        self.relatedPlaylists = relatedPlaylists
+        self.googlePlusUserId = googlePlusUserId
         self.parse()
 
     def parse(self):
@@ -58,6 +61,123 @@ class ContentDetails(object):
         self.bulletin = create_or_none(Bulletin, self._bulletin)
         self.social = create_or_none(Social, self._social)
         self.channelItem = create_or_none(ChannelItem, self._channelItem)
+
+
+class Channel(object):
+    def __init__(self, title=None, description=None, keywords=None, defaultTab=None,
+                 trackingAnalyticsAccountId=None, moderateComments=None, showRelatedChannels=None,
+                 showBrowseView=None, featuredChannelsTitle=None, featuredChannelsUrls=None,
+                 unsubscribedTrailer=None, profileColor=None, ):
+        self.title = title
+        self.description = description
+        self.keywords = keywords
+        self.defaultTab = defaultTab
+        self.trackingAnalyticsAccountId = trackingAnalyticsAccountId
+        self.moderateComments = moderateComments
+        self.showRelatedChannels = showRelatedChannels
+        self.showBrowseView = showBrowseView
+        self.featuredChannelsTitle = featuredChannelsTitle
+        self.featuredChannelsUrls = featuredChannelsUrls
+        self.unsubscribedTrailer = unsubscribedTrailer
+        self.profileColor = profileColor
+
+
+class HasDefaultLocalizedMixin(object):
+    def __init__(self, default=None, localized=None):
+        self.default = default
+        self.localized = localized
+
+
+class BackgroundImageUrl(HasDefaultLocalizedMixin):
+    pass
+
+
+class LargeBrandedBannerImageImapScript(HasDefaultLocalizedMixin):
+    pass
+
+
+class LargeBrandedBannerImageUrl(HasDefaultLocalizedMixin):
+    pass
+
+
+class SmallBrandedBannerImageImapScript(HasDefaultLocalizedMixin):
+    pass
+
+
+class SmallBrandedBannerImageUrl(HasDefaultLocalizedMixin):
+    pass
+
+
+class Image(object):
+    def __init__(self, bannerImageUrl=None, bannerMobileImageUrl=None, backgroundImageUrl=None,
+                 largeBrandedBannerImageImapScript=None, largeBrandedBannerImageUrl=None,
+                 smallBrandedBannerImageImapScript=None, smallBrandedBannerImageUrl=None,
+                 watchIconImageUrl=None, trackingImageUrl=None, bannerTabletLowImageUrl=None,
+                 bannerTabletImageUrl=None, bannerTabletHdImageUrl=None, bannerTabletExtraHdImageUrl=None,
+                 bannerMobileLowImageUrl=None, bannerMobileMediumHdImageUrl=None, bannerMobileHdImageUrl=None,
+                 bannerMobileExtraHdImageUrl=None, bannerTvImageUrl=None, bannerExternalUrl=None, hints=None):
+        self.bannerImageUrl = bannerImageUrl
+        self.bannerMobileImageUrl = bannerMobileImageUrl
+        self.backgroundImageUrl = backgroundImageUrl
+        self.largeBrandedBannerImageImapScript = largeBrandedBannerImageImapScript
+        self.largeBrandedBannerImageUrl = largeBrandedBannerImageUrl
+        self.smallBrandedBannerImageImapScript = smallBrandedBannerImageImapScript
+        self.smallBrandedBannerImageUrl = smallBrandedBannerImageUrl
+        self.watchIconImageUrl = watchIconImageUrl
+        self.trackingImageUrl = trackingImageUrl
+        self.bannerTabletLowImageUrl = bannerTabletLowImageUrl
+        self.bannerTabletImageUrl = bannerTabletImageUrl
+        self.bannerTabletHdImageUrl = bannerTabletHdImageUrl
+        self.bannerTabletExtraHdImageUrl = bannerTabletExtraHdImageUrl
+        self.bannerMobileLowImageUrl = bannerMobileLowImageUrl
+        self.bannerMobileMediumHdImageUrl = bannerMobileMediumHdImageUrl
+        self.bannerMobileHdImageUrl = bannerMobileHdImageUrl
+        self.bannerMobileExtraHdImageUrl = bannerMobileExtraHdImageUrl
+        self.bannerTvImageUrl = bannerTvImageUrl
+        self.bannerExternalUrl = bannerExternalUrl
+        self.hints = hints
+
+
+class Watch(object):
+    def __init__(self, textColor=None, backgroundColor=None, featuredPlaylistId=None):
+        self.textColor = textColor
+        self.backgroundColor = backgroundColor
+        self.featuredPlaylistId = featuredPlaylistId
+
+
+class BrandingSettings(object):
+    def __init__(self, channel=None, watch=None, image=None):
+        self.channel = channel
+        self.watch = watch
+        self.image = image
+
+
+class Status(object):
+    def __init__(self, privacyStatus=None, isLinked=None, ):
+        self.privacyStatus = privacyStatus
+        self.isLinked = isLinked
+
+
+class TopicDetails(object):
+    def __init__(self, topicIds=None):
+        self.topicIds = topicIds
+
+
+class Statistics(object):
+    def __init__(self, viewCount=None, commentCount=None, subscriberCount=None, videoCount=None):
+        self.viewCount = viewCount
+        self.commentCount = commentCount
+        self.subscriberCount = subscriberCount
+        self.videoCount = videoCount
+
+
+class RelatedPlaylists(object):
+    def __init__(self, likes=None, favorites=None, uploads=None, watchHistory=None, watchLater=None):
+        self.likes = likes
+        self.favorite = favorites
+        self.uploads = uploads
+        self.watchHistory = watchHistory
+        self.watchLater = watchLater
 
 
 class Thumbnail(object):
@@ -147,6 +267,25 @@ class PageInfo(object):
     def __init__(self, totalResults=None, resultsPerPage=None):
         self.totalResults = totalResults
         self.resultsPerPage = resultsPerPage
+
+
+class Timing(object):
+    def __init__(self, type=None, offsetMs=None):
+        self.type = type
+        self.offsetMs = offsetMs
+
+
+class Position(object):
+    def __init__(self, type=None, cornerPosition=None):
+        self.type = type
+        self.cornerPosition = cornerPosition
+
+
+class InvideoPromotion(object):
+    def __init__(self, timing=None, position=None, items=None):
+        self.timing = timing
+        self.position = position
+        self.items = items
 
 
 __author__ = 'lalo'

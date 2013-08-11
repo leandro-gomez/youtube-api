@@ -26,4 +26,20 @@ class Activity(object):
         return self.__str__()
 
 
+class Channel(object):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None,
+                 contentDetails=None, statistics=None, topicDetails=None,
+                 status=None, brandingSettings=None, invideoPromotion=None, ):
+        self.kind = kind
+        self.etag = etag
+        self.id = id
+        self.snippet = snippet
+        self.contentDetails = contentDetails
+        self.statistics = statistics
+        self.topicDetails = topicDetails
+        self.status =status
+        self.brandingSettings = brandingSettings
+        self.invideoPromotion = invideoPromotion
+
+
 __author__ = 'lalo'
