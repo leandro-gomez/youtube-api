@@ -79,7 +79,7 @@ class Channels(Resource):
     ]
 
     def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None, **kwargs):
-        super(Channel, self).__init__(**kwargs)
+        super(Channels, self).__init__(**kwargs)
         self.kind = kind
         self.etag = etag
         self._pageInfo = pageInfo
