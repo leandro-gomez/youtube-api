@@ -5,18 +5,16 @@ from youtube.data.resources.fields import (
 from youtube.data.utils import create_or_none
 
 
-class Activity(object):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None):
+class ResourceType(object):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None):
         self.kind = kind
         self.etag = etag
         self.id = id
         self._snippet = snippet
-        self._contentDetails = contentDetails
         self.parse()
 
     def parse(self):
         self.snippet = create_or_none(Snippet, self._snippet)
-        self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
 
     def __unicode__(self):
         return unicode(self.__str__())
@@ -28,14 +26,22 @@ class Activity(object):
         return self.__str__()
 
 
-class Channel(object):
+class Activity(ResourceType):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None):
+        super(Activity, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+        self._contentDetails = contentDetails
+        self.parse()
+
+    def parse(self):
+        super(Activity, self).parse()
+        self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
+
+
+class Channel(ResourceType):
     def __init__(self, kind=None, etag=None, id=None, snippet=None,
                  contentDetails=None, statistics=None, topicDetails=None,
                  status=None, brandingSettings=None, invideoPromotion=None, ):
-        self.kind = kind
-        self.etag = etag
-        self.id = id
-        self._snippet = snippet
+        super(Channel, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
         self._contentDetails = contentDetails
         self._statistics = statistics
         self._topicDetails = topicDetails
@@ -45,7 +51,7 @@ class Channel(object):
         self.parse()
 
     def parse(self):
-        self.snippet = create_or_none(Snippet, self._snippet)
+        super(Channel, self).parse()
         self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
         self.statistics = create_or_none(Statistics, self._statistics)
         self.topicDetails = create_or_none(TopicDetails, self._topicDetails)
@@ -54,15 +60,8 @@ class Channel(object):
         self.invideoPromotion = create_or_none(InvideoPromotion, self._invideoPromotion)
 
 
-class GuideCategory(object):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None, **kwargs):
-        super(GuideCategory, self).__init__(**kwargs)
-        self.kind = kind
-        self.etag = etag
-        self.id = id
-        self._snippet = snippet
-        self.parse()
+class GuideCategory(ResourceType):
+    pass
 
-    def parse(self):
-        self.snippet = create_or_none(Snippet, self._snippet)
+
 __author__ = 'lalo'
