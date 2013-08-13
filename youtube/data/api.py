@@ -15,6 +15,9 @@ class Resource(object):
     accepted = []
     url = None
 
+    def __init__(self, **kwargs):
+        self.extra = kwargs
+
     @classmethod
     def get(cls, part, **kwargs):
         return youtube_get(cls.url, part=part, **kwargs)
@@ -49,7 +52,8 @@ class Activities(Resource):
 
     url = ACTIVITIES_URL
 
-    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None):
+    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None, **kwargs):
+        super(Activities, self).__init__(**kwargs)
         self.kind = kind
         self.etag = etag
         self._pageInfo = pageInfo
@@ -74,7 +78,8 @@ class Channels(Resource):
         'pageToken', 'fields',
     ]
 
-    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None):
+    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None, **kwargs):
+        super(Channel, self).__init__(**kwargs)
         self.kind = kind
         self.etag = etag
         self._pageInfo = pageInfo
