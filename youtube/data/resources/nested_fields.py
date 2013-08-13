@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from youtube.data_api.utils import create_or_none
+from youtube.data.utils import create_or_none
 
 
 class Channel(object):

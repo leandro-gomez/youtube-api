@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import iso8601
-from youtube.data_api.resources.supporting import (
+from youtube.data.resources.nested_fields import (
     Channel, Watch, Image, Hint, Position,
     Timing, Upload, Like, Favorite,
     Subscription, Comment, PlayListItem,
     Recommendation, Bulletin, Social, ChannelItem,
     RelatedPlaylists, Thumbnail, )
-from youtube.data_api.utils import create_or_none
+from youtube.data.utils import create_or_none
 
 
 class Snippet(object):
