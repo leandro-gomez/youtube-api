@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from youtube.data_api.resources.main_supporting import (
+from youtube.data.resources.fields import (
     Snippet, ContentDetails, InvideoPromotion,
     BrandingSettings, Status, TopicDetails, Statistics, )
-from youtube.data_api.utils import create_or_none
+from youtube.data.utils import create_or_none
 
 
 class Activity(object):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import warnings
 import requests
-from youtube.data_api.exceptions import YouTubeException
+from youtube.data.exceptions import YouTubeException
 from youtube.settings import API_KEY
 import json
 

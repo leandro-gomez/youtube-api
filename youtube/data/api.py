@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from resources.main import Activity, Channel
+from resources.types import Activity, Channel
 from utils import youtube_get, error_factory, create_or_none, extra_kwargs_warning
-from youtube.data_api.resources.supporting import PageInfo
+from youtube.data.resources.nested_fields import PageInfo
 
 ACTIVITIES_URL = "https://www.googleapis.com/youtube/v3/activities/"
 
@@ -9,6 +9,9 @@ CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels"
 
 
 class Resource(object):
+    """
+    Abstract class of Resource YouTube Data API
+    """
     accepted = []
     url = None
 
