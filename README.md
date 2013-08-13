@@ -11,3 +11,5 @@ Supported data APIs:
 Activity: list,
 
 Channels: list,
+
+GuideCategories: list

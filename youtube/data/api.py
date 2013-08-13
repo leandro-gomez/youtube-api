@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-from resources.types import Activity, Channel
+from resources.types import Activity, Channel, GuideCategory
 from utils import youtube_get, error_factory, create_or_none, extra_kwargs_warning
 from youtube.data.resources.nested_fields import PageInfo
 
 ACTIVITIES_URL = "https://www.googleapis.com/youtube/v3/activities/"
 
 CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels"
+
+GUIDE_CATEGORIES_URL = "https://www.googleapis.com/youtube/v3/guideCategories"
 
 
 class Resource(object):
@@ -52,7 +54,8 @@ class Activities(Resource):
 
     url = ACTIVITIES_URL
 
-    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None, **kwargs):
+    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None,
+                 **kwargs):
         super(Activities, self).__init__(**kwargs)
         self.kind = kind
         self.etag = etag
@@ -78,7 +81,8 @@ class Channels(Resource):
         'pageToken', 'fields',
     ]
 
-    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None, **kwargs):
+    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None,
+                 **kwargs):
         super(Channels, self).__init__(**kwargs)
         self.kind = kind
         self.etag = etag
@@ -92,6 +96,25 @@ class Channels(Resource):
         items = self._items
         self.items = [Channel(**item) for item in items]
         self.pageInfo = create_or_none(PageInfo, self._pageInfo)
+
+
+class GuideCategories(Resource):
+    url = GUIDE_CATEGORIES_URL
+
+    accepted = [
+        'id', 'regionCode', 'hl',
+    ]
+
+    def __init__(self, kind=None, etag=None, items=None, **kwargs):
+        super(GuideCategories, self).__init__(**kwargs)
+        self.kind = kind
+        self.etag = etag
+        self._items = items
+        self.parse()
+
+    def parse(self):
+        items = self._items
+        self.items = [GuideCategory(**item) for item in items]
 
 
 __author__ = 'lalo'

@@ -54,4 +54,15 @@ class Channel(object):
         self.invideoPromotion = create_or_none(InvideoPromotion, self._invideoPromotion)
 
 
+class GuideCategory(object):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, **kwargs):
+        super(GuideCategory, self).__init__(**kwargs)
+        self.kind = kind
+        self.etag = etag
+        self.id = id
+        self._snippet = snippet
+        self.parse()
+
+    def parse(self):
+        self.snippet = create_or_none(Snippet, self._snippet)
 __author__ = 'lalo'
