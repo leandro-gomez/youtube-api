@@ -11,7 +11,6 @@ class ResourceType(object):
         self.etag = etag
         self.id = id
         self._snippet = snippet
-        self.parse()
 
     def parse(self):
         self.snippet = create_or_none(Snippet, self._snippet)
@@ -20,7 +19,7 @@ class ResourceType(object):
         return unicode(self.__str__())
 
     def __str__(self):
-        return "Activity(kind={kind},id={id} )".format(kind=self.kind, id=self.id)
+        return "{klass}(kind={kind},id={id} )".format(klass=str(self.__class__.__name__), kind=self.kind, id=self.id)
 
     def __repr__(self):
         return self.__str__()
@@ -38,9 +37,9 @@ class Activity(ResourceType):
 
 
 class Channel(ResourceType):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None,
-                 contentDetails=None, statistics=None, topicDetails=None,
-                 status=None, brandingSettings=None, invideoPromotion=None, ):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None,
+                 statistics=None, topicDetails=None, status=None, brandingSettings=None,
+                 invideoPromotion=None, ):
         super(Channel, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
         self._contentDetails = contentDetails
         self._statistics = statistics
