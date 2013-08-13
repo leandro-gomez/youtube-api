@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
 
-API_KEY = 'AIzaSyDP74ePWyfwuHfGVnZHcM4HW4hil-4VxsU'
+API_KEY = os.environ['YOUTUBE_API_KEY']
 
 RESOURCE_TYPES = (
     'activity', 'channel', 'guideCategory', 'playlist',
