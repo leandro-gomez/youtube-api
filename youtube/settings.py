@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-API_KEY = os.environ['YOUTUBE_API_KEY']
+API_KEY = os.environ.get('YOUTUBE_API_KEY', None)
 
 RESOURCE_TYPES = (
     'activity', 'channel', 'guideCategory', 'playlist',

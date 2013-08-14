@@ -17,6 +17,8 @@ SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
 
 SUBSCRIPTIONS_URL = "https://www.googleapis.com/youtube/v3/subscriptions"
 
+VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos"
+
 
 class Resource(object):
     """
