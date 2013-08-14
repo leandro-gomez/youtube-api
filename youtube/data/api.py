@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.types import Activity, Channel, GuideCategory
+from resources.types import Activity, Channel, GuideCategory, PlaylistItem
 from utils import youtube_get, error_factory, create_or_none, extra_kwargs_warning
 from youtube.data.resources.nested_fields import PageInfo
 
@@ -9,6 +9,8 @@ CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels"
 
 GUIDE_CATEGORIES_URL = "https://www.googleapis.com/youtube/v3/guideCategories"
 
+PLAY_LIST_ITEM_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
+
 
 class Resource(object):
     """
@@ -16,9 +18,18 @@ class Resource(object):
     """
     accepted = []
     url = None
+    item_class = None
 
-    def __init__(self, **kwargs):
+    def __init__(self, kind=None, etag=None, items=None, **kwargs):
         self.extra = kwargs
+        self.kind = kind
+        self.etag = etag
+        self._items = items or []
+        self.parse()
+
+    def parse(self):
+        items = self._items
+        self.items = [self.item_class(**item) for item in items]
 
     @classmethod
     def get(cls, part, **kwargs):
@@ -45,35 +56,32 @@ class Resource(object):
         return cls(**response)
 
 
-class Activities(Resource):
+class ResourcePageInfo(Resource):
+    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None,
+                 prevPageToken=None, items=None, **kwargs):
+        self._pageInfo = pageInfo
+        self.nextPageToken = nextPageToken
+        self.prevPageToken = prevPageToken
+        super(ResourcePageInfo, self).__init__(kind=kind, etag=etag, items=items, **kwargs)
+
+    def parse(self):
+        self.pageInfo = create_or_none(PageInfo, self._pageInfo)
+        super(ResourcePageInfo, self).parse()
+
+
+class Activities(ResourcePageInfo):
+    url = ACTIVITIES_URL
+    item_class = Activity
     accepted = [
         'channelId', 'home', 'maxResults',
         'mine', 'pageToken', 'publishedAfter',
         'publishedBefore', 'regionCode', 'fields',
     ]
 
-    url = ACTIVITIES_URL
 
-    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None,
-                 **kwargs):
-        super(Activities, self).__init__(**kwargs)
-        self.kind = kind
-        self.etag = etag
-        self._pageInfo = pageInfo
-        self.nextPageToken = nextPageToken
-        self.prevPageToken = prevPageToken
-        self._items = items or []
-        self.parse()
-
-    def parse(self):
-        items = self._items
-        self.items = [Activity(**item) for item in items]
-
-        self.pageInfo = create_or_none(PageInfo, self._pageInfo)
-
-
-class Channels(Resource):
+class Channels(ResourcePageInfo):
     url = CHANNELS_URL
+    item_class = Channel
     accepted = [
         'categoryId', 'forUsername', 'id',
         'managedByMe', 'mine', 'mySubscribers',
@@ -81,40 +89,24 @@ class Channels(Resource):
         'pageToken', 'fields',
     ]
 
-    def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None, prevPageToken=None, items=None,
-                 **kwargs):
-        super(Channels, self).__init__(**kwargs)
-        self.kind = kind
-        self.etag = etag
-        self._pageInfo = pageInfo
-        self.nextPageToken = nextPageToken
-        self.prevPageToken = prevPageToken
-        self._items = items or []
-        self.parse()
-
-    def parse(self):
-        items = self._items
-        self.items = [Channel(**item) for item in items]
-        self.pageInfo = create_or_none(PageInfo, self._pageInfo)
-
 
 class GuideCategories(Resource):
     url = GUIDE_CATEGORIES_URL
-
+    item_class = GuideCategory
     accepted = [
         'id', 'regionCode', 'hl',
     ]
 
-    def __init__(self, kind=None, etag=None, items=None, **kwargs):
-        super(GuideCategories, self).__init__(**kwargs)
-        self.kind = kind
-        self.etag = etag
-        self._items = items
-        self.parse()
 
-    def parse(self):
-        items = self._items
-        self.items = [GuideCategory(**item) for item in items]
+class PlaylistItems(ResourcePageInfo):
+    item_class = PlaylistItem
+
+    url = PLAY_LIST_ITEM_URL
+
+    accepted = [
+        'id', 'playlistId', 'maxResults',
+        'pageToken', 'videoId',
+    ]
 
 
 __author__ = 'lalo'

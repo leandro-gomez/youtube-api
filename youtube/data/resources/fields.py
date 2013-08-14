@@ -5,13 +5,13 @@ from youtube.data.resources.nested_fields import (
     Timing, Upload, Like, Favorite,
     Subscription, Comment, PlayListItem,
     Recommendation, Bulletin, Social, ChannelItem,
-    RelatedPlaylists, Thumbnail, )
+    RelatedPlaylists, Thumbnail, ResourceId)
 from youtube.data.utils import create_or_none
 
 
 class Snippet(object):
-    def __init__(self, publishedAt=None, channelId=None, title=None, description=None,
-                 thumbnails=None, channelTitle=None, type=None, groupId=None):
+    def __init__(self, publishedAt=None, channelId=None, title=None, description=None, resourceId=None,
+                 thumbnails=None, channelTitle=None, type=None, groupId=None, playlistId=None, position=None, ):
         self._publishedAt = publishedAt
         self.channelId = channelId
         self.title = title
@@ -20,11 +20,15 @@ class Snippet(object):
         self.channelTitle = channelTitle
         self.type = type
         self.groupId = groupId
+        self.playlistId = playlistId
+        self._resourceId = resourceId
+        self.position = position
         self.parse()
 
     def parse(self):
         self.parse_publishedAt()
         self.parse_thumbnails()
+        self.resourceId = create_or_none(ResourceId, self._resourceId)
 
     def parse_publishedAt(self):
         publishedAt = self._publishedAt
@@ -41,7 +45,8 @@ class Snippet(object):
 class ContentDetails(object):
     def __init__(self, upload=None, like=None, favorite=None, comment=None, subscription=None,
                  playlistItem=None, recommendation=None, bulletin=None, social=None,
-                 channelItem=None, relatedPlaylists=None, googlePlusUserId=None):
+                 channelItem=None, relatedPlaylists=None, googlePlusUserId=None, videoId=None,
+                 startAt=None, endAt=None, note=None):
         self._upload = upload
         self._like = like
         self._favorite = favorite
@@ -54,6 +59,10 @@ class ContentDetails(object):
         self._channelItem = channelItem
         self._relatedPlaylists = relatedPlaylists
         self.googlePlusUserId = googlePlusUserId
+        self.videoId = videoId
+        self.startAt = startAt
+        self.endAt = endAt
+        self.note = note
         self.parse()
 
     def parse(self):
