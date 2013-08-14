@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from youtube.data.resources.fields import (
     Snippet, ContentDetails, InvideoPromotion,
-    BrandingSettings, Status, TopicDetails, Statistics, Player, ResourceID)
+    BrandingSettings, Status, TopicDetails, Statistics, Player, ResourceID, SubscriberSnippet)
 from youtube.data.utils import create_or_none
 
 
@@ -94,5 +94,16 @@ class Search(ResourceType):
     def parse_id(self):
         self.id = create_or_none(ResourceID, self._id)
 
+
+class Subscription(ResourceType):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, subscriberSnippet=None):
+        self._contentDetails = contentDetails
+        self._subscriberSnippet = subscriberSnippet
+        super(Subscription, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+
+    def parse(self):
+        self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
+        self.subscriberSnippet = create_or_none(SubscriberSnippet, self._subscriberSnippet)
+        super(Subscription, self).parse()
 
 __author__ = 'lalo'

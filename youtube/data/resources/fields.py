@@ -147,4 +147,21 @@ class ResourceID(object):
         self.playlistId = playlistId
 
 
+class SubscriberSnippet(object):
+    def __init__(self, title=None, description=None, channelId=None, thumbnails=None):
+        self.title = title
+        self.description = description
+        self.channelId = channelId
+        self._thumbnails = thumbnails
+        self.parse()
+
+    def parse_thumbnails(self):
+        thumbnails = self._thumbnails
+        if thumbnails:
+            self.thumbnails = Thumbnail.parse(thumbnails)
+
+    def parse(self):
+        self.parse_thumbnails()
+
+
 __author__ = 'lalo'

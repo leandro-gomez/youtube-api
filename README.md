@@ -19,3 +19,5 @@ PlaylistItems: list
 Playlists: list
 
 Search: list
+
+Subscriptions: list

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist, Search
+from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist, Search, Subscription
 from utils import youtube_get, error_factory, create_or_none, extra_kwargs_warning
 from youtube.data.resources.nested_fields import PageInfo
 
@@ -14,6 +14,8 @@ PLAY_LIST_ITEM_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
 PLAY_LIST_URL = "https://www.googleapis.com/youtube/v3/playlists"
 
 SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
+
+SUBSCRIPTIONS_URL = "https://www.googleapis.com/youtube/v3/subscriptions"
 
 
 class Resource(object):
@@ -131,5 +133,15 @@ class Searches(ResourcePageInfo):
         'videoDefinition', 'videoDimension', 'videoDuration', 'videoEmbeddable', 'videoLicense',
         'videoSyndicated', 'videoType',
     ]
+
+
+class Subscriptions(ResourcePageInfo):
+    url = SUBSCRIPTIONS_URL
+    item_class = Subscription
+    accepted = [
+        'channelId', 'id', 'mine', 'mySubscribers',
+        'forChannelId', 'maxResults', 'order', 'pageToken',
+    ]
+
 
 __author__ = 'lalo'
