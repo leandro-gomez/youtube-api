@@ -13,3 +13,5 @@ Activity: list,
 Channels: list,
 
 GuideCategories: list
+
+PlaylistItems: list
