@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.types import Activity, Channel, GuideCategory, PlaylistItem
+from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist
 from utils import youtube_get, error_factory, create_or_none, extra_kwargs_warning
 from youtube.data.resources.nested_fields import PageInfo
 
@@ -10,6 +10,8 @@ CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels"
 GUIDE_CATEGORIES_URL = "https://www.googleapis.com/youtube/v3/guideCategories"
 
 PLAY_LIST_ITEM_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
+
+PLAY_LIST_URL = "https://www.googleapis.com/youtube/v3/playlists"
 
 
 class Resource(object):
@@ -106,6 +108,14 @@ class PlaylistItems(ResourcePageInfo):
     accepted = [
         'id', 'playlistId', 'maxResults',
         'pageToken', 'videoId',
+    ]
+
+
+class Playlists(ResourcePageInfo):
+    item_class = Playlist
+    url = PLAY_LIST_URL
+    accepted = [
+        'channelId', 'id', 'mine', 'maxResults', 'pageToken'
     ]
 
 

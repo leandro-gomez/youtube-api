@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from youtube.data.resources.fields import (
     Snippet, ContentDetails, InvideoPromotion,
-    BrandingSettings, Status, TopicDetails, Statistics, )
+    BrandingSettings, Status, TopicDetails, Statistics, Player)
 from youtube.data.utils import create_or_none
 
 
@@ -73,5 +73,16 @@ class PlaylistItem(ResourceType):
         self.status = create_or_none(Status, self._status)
         super(PlaylistItem, self).parse()
 
+
+class Playlist(PlaylistItem):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, status=None, player=None):
+        self._player = player
+        super(Playlist, self).__init__(kind=kind, etag=etag, id=id,
+                                       snippet=snippet, contentDetails=contentDetails,
+                                       status=status)
+
+    def parse(self):
+        self.player = create_or_none(Player, self._player)
+        super(Playlist, self).parse()
 
 __author__ = 'lalo'

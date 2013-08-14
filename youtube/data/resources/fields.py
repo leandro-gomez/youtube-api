@@ -10,7 +10,7 @@ from youtube.data.utils import create_or_none
 
 
 class Snippet(object):
-    def __init__(self, publishedAt=None, channelId=None, title=None, description=None, resourceId=None,
+    def __init__(self, publishedAt=None, channelId=None, title=None, description=None, resourceId=None, tags=None,
                  thumbnails=None, channelTitle=None, type=None, groupId=None, playlistId=None, position=None, ):
         self._publishedAt = publishedAt
         self.channelId = channelId
@@ -23,6 +23,7 @@ class Snippet(object):
         self.playlistId = playlistId
         self._resourceId = resourceId
         self.position = position
+        self.tags = tags
         self.parse()
 
     def parse(self):
@@ -44,7 +45,7 @@ class Snippet(object):
 
 class ContentDetails(object):
     def __init__(self, upload=None, like=None, favorite=None, comment=None, subscription=None,
-                 playlistItem=None, recommendation=None, bulletin=None, social=None,
+                 playlistItem=None, recommendation=None, bulletin=None, social=None, itemCount=None,
                  channelItem=None, relatedPlaylists=None, googlePlusUserId=None, videoId=None,
                  startAt=None, endAt=None, note=None):
         self._upload = upload
@@ -63,6 +64,7 @@ class ContentDetails(object):
         self.startAt = startAt
         self.endAt = endAt
         self.note = note
+        self.itemCount = itemCount
         self.parse()
 
     def parse(self):
@@ -130,6 +132,11 @@ class InvideoPromotion(object):
     def parse(self):
         self.timing = create_or_none(Timing, self._timing)
         self.position = create_or_none(Position, self._position)
+
+
+class Player(object):
+    def __init__(self, embedHtml=None):
+        self.embedHtml = embedHtml
 
 
 __author__ = 'lalo'

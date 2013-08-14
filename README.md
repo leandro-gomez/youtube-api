@@ -15,3 +15,5 @@ Channels: list,
 GuideCategories: list
 
 PlaylistItems: list
+
+Playlists: list
