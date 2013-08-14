@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from youtube.data.resources.fields import (
     Snippet, ContentDetails, InvideoPromotion,
-    BrandingSettings, Status, TopicDetails, Statistics, Player)
+    BrandingSettings, Status, TopicDetails, Statistics, Player, ResourceID)
 from youtube.data.utils import create_or_none
 
 
@@ -9,12 +9,16 @@ class ResourceType(object):
     def __init__(self, kind=None, etag=None, id=None, snippet=None):
         self.kind = kind
         self.etag = etag
-        self.id = id
+        self._id = id
         self._snippet = snippet
         self.parse()
 
     def parse(self):
         self.snippet = create_or_none(Snippet, self._snippet)
+        self.parse_id()
+
+    def parse_id(self):
+        self.id = self._id
 
     def __unicode__(self):
         return unicode(self.__str__())
@@ -84,5 +88,11 @@ class Playlist(PlaylistItem):
     def parse(self):
         self.player = create_or_none(Player, self._player)
         super(Playlist, self).parse()
+
+
+class Search(ResourceType):
+    def parse_id(self):
+        self.id = create_or_none(ResourceID, self._id)
+
 
 __author__ = 'lalo'

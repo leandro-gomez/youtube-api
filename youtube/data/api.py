@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist
+from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist, Search
 from utils import youtube_get, error_factory, create_or_none, extra_kwargs_warning
 from youtube.data.resources.nested_fields import PageInfo
 
@@ -12,6 +12,8 @@ GUIDE_CATEGORIES_URL = "https://www.googleapis.com/youtube/v3/guideCategories"
 PLAY_LIST_ITEM_URL = "https://www.googleapis.com/youtube/v3/playlistItems"
 
 PLAY_LIST_URL = "https://www.googleapis.com/youtube/v3/playlists"
+
+SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
 
 
 class Resource(object):
@@ -118,5 +120,16 @@ class Playlists(ResourcePageInfo):
         'channelId', 'id', 'mine', 'maxResults', 'pageToken'
     ]
 
+
+class Searches(ResourcePageInfo):
+    url = SEARCH_URL
+    item_class = Search
+    accepted = [
+        'forContentOwner', 'forMine', 'relatedToVideoId', 'channelId', 'channelType', 'maxResults',
+        'onBehalfOfContentOwner', 'order', 'pageToken', 'publishedAfter', 'publishedBefore', 'q',
+        'regionCode', 'safeSearch', 'topicId', 'type', 'videoCaption', 'videoCategoryId',
+        'videoDefinition', 'videoDimension', 'videoDuration', 'videoEmbeddable', 'videoLicense',
+        'videoSyndicated', 'videoType',
+    ]
 
 __author__ = 'lalo'

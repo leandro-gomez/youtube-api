@@ -17,3 +17,5 @@ GuideCategories: list
 PlaylistItems: list
 
 Playlists: list
+
+Search: list

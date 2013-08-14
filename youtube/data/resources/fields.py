@@ -139,4 +139,12 @@ class Player(object):
         self.embedHtml = embedHtml
 
 
+class ResourceID(object):
+    def __init__(self, kind=None, videoId=None, channelId=None, playlistId=None):
+        self.kind = kind
+        self.videoId = videoId
+        self.channelId = channelId
+        self.playlistId = playlistId
+
+
 __author__ = 'lalo'
