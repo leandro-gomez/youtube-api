@@ -13,7 +13,7 @@ setup(
     packages=['youtube', 'youtube.data', 'youtube.data.resources'],
     include_package_data=True,
     license='BSD License',
-    requires=['iso8601', 'requests'],
+    install_requires=['iso8601', 'requests'],
     description='Python Youtube Data API',
     long_description=README,
     url='https://github.com/lalo73/youtube-api/',
