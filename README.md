@@ -1,7 +1,7 @@
 youtube-api
 ===========
 
-Python Youtube API (0.0.1)
+Python Youtube API (0.2dev)
 
 
 This is an library with the intent that create a happy python YouTube API (It's just a Youtube wrapper).
