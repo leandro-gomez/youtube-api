@@ -26,12 +26,9 @@ def get_params(**kwargs):
     return params
 
 
-
-def youtube_get(url, **kwargs):
-    print kwargs
+def youtube_get(url, get_method=requests.get, **kwargs):
     params = get_params(**kwargs)
-    print params
-    response = requests.get(url, params=params)
+    response = get_method(url, params=params)
     return response.json()
 
 
