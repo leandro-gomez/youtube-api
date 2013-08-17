@@ -2,11 +2,18 @@
 from youtube.data.utils import create_or_none
 
 
-class Channel(object):
+class BaseNestedField(object):
+    def __init__(self, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
+
+
+class Channel(BaseNestedField):
     def __init__(self, title=None, description=None, keywords=None, defaultTab=None,
                  trackingAnalyticsAccountId=None, moderateComments=None, showRelatedChannels=None,
                  showBrowseView=None, featuredChannelsTitle=None, featuredChannelsUrls=None,
-                 unsubscribedTrailer=None, profileColor=None, ):
+                 unsubscribedTrailer=None, profileColor=None, **kwargs):
+        super(Channel, self).__init__(**kwargs)
         self.title = title
         self.description = description
         self.keywords = keywords
@@ -21,8 +28,9 @@ class Channel(object):
         self.profileColor = profileColor
 
 
-class HasDefaultLocalizedMixin(object):
-    def __init__(self, default=None, localized=None):
+class HasDefaultLocalizedMixin(BaseNestedField):
+    def __init__(self, default=None, localized=None, **kwargs):
+        super(HasDefaultLocalizedMixin, self).__init__(**kwargs)
         self.default = default
         self.localized = localized
 
@@ -47,8 +55,9 @@ class SmallBrandedBannerImageUrl(HasDefaultLocalizedMixin):
     pass
 
 
-class Hint(object):
-    def __init__(self, property=None, value=None):
+class Hint(BaseNestedField):
+    def __init__(self, property=None, value=None, **kwargs):
+        super(Hint, self).__init__(**kwargs)
         self.property = property
         self.value = value
 
@@ -60,14 +69,15 @@ class Hint(object):
         return hints
 
 
-class Image(object):
+class Image(BaseNestedField):
     def __init__(self, bannerImageUrl=None, bannerMobileImageUrl=None, backgroundImageUrl=None,
                  largeBrandedBannerImageImapScript=None, largeBrandedBannerImageUrl=None,
                  smallBrandedBannerImageImapScript=None, smallBrandedBannerImageUrl=None,
                  watchIconImageUrl=None, trackingImageUrl=None, bannerTabletLowImageUrl=None,
                  bannerTabletImageUrl=None, bannerTabletHdImageUrl=None, bannerTabletExtraHdImageUrl=None,
                  bannerMobileLowImageUrl=None, bannerMobileMediumHdImageUrl=None, bannerMobileHdImageUrl=None,
-                 bannerMobileExtraHdImageUrl=None, bannerTvImageUrl=None, bannerExternalUrl=None, hints=None):
+                 bannerMobileExtraHdImageUrl=None, bannerTvImageUrl=None, bannerExternalUrl=None, hints=None, **kwargs):
+        super(Image, self).__init__(**kwargs)
         self.bannerImageUrl = bannerImageUrl
         self.bannerMobileImageUrl = bannerMobileImageUrl
         self._backgroundImageUrl = backgroundImageUrl
@@ -108,15 +118,17 @@ class Image(object):
             self.hints = None
 
 
-class Watch(object):
-    def __init__(self, textColor=None, backgroundColor=None, featuredPlaylistId=None):
+class Watch(BaseNestedField):
+    def __init__(self, textColor=None, backgroundColor=None, featuredPlaylistId=None, **kwargs):
+        super(Watch, self).__init__(**kwargs)
         self.textColor = textColor
         self.backgroundColor = backgroundColor
         self.featuredPlaylistId = featuredPlaylistId
 
 
-class RelatedPlaylists(object):
-    def __init__(self, likes=None, favorites=None, uploads=None, watchHistory=None, watchLater=None):
+class RelatedPlaylists(BaseNestedField):
+    def __init__(self, likes=None, favorites=None, uploads=None, watchHistory=None, watchLater=None, **kwargs):
+        super(RelatedPlaylists, self).__init__(**kwargs)
         self.likes = likes
         self.favorite = favorites
         self.uploads = uploads
@@ -124,8 +136,9 @@ class RelatedPlaylists(object):
         self.watchLater = watchLater
 
 
-class Thumbnail(object):
-    def __init__(self, url=None, width=None, height=None):
+class Thumbnail(BaseNestedField):
+    def __init__(self, url=None, width=None, height=None, **kwargs):
+        super(Thumbnail, self).__init__(**kwargs)
         self.url = url
         self.width = width
         self.height = height
@@ -138,13 +151,15 @@ class Thumbnail(object):
         return parsed
 
 
-class Upload(object):
-    def __init__(self, videoId=None):
+class Upload(BaseNestedField):
+    def __init__(self, videoId=None, **kwargs):
+        super(Upload, self).__init__(**kwargs)
         self.videoId = videoId
 
 
-class HasResourceMixin(object):
-    def __init__(self, resourceId=None):
+class HasResourceMixin(BaseNestedField):
+    def __init__(self, resourceId=None, **kwargs):
+        super(HasResourceMixin, self).__init__(**kwargs)
         self._resourceId = resourceId
         self.parse()
 
@@ -169,15 +184,15 @@ class Comment(HasResourceMixin):
 
 
 class PlayListItem(HasResourceMixin):
-    def __init__(self, resourceId=None, playlistId=None, playlistItemId=None):
-        super(PlayListItem, self).__init__(resourceId=resourceId)
+    def __init__(self, resourceId=None, playlistId=None, playlistItemId=None, **kwargs):
+        super(PlayListItem, self).__init__(resourceId=resourceId, **kwargs)
         self.playlistId = playlistId
         self.playlistItemId = playlistItemId
 
 
 class Recommendation(HasResourceMixin):
-    def __init__(self, resourceId=None, reason=None, seedResourceId=None):
-        super(Recommendation, self).__init__(resourceId=resourceId)
+    def __init__(self, resourceId=None, reason=None, seedResourceId=None, **kwargs):
+        super(Recommendation, self).__init__(resourceId=resourceId, **kwargs)
         self.reason = reason
         self.seedResourceID = seedResourceId
 
@@ -187,8 +202,8 @@ class Bulletin(HasResourceMixin):
 
 
 class Social(HasResourceMixin):
-    def __init__(self, resourceId=None, type=None, author=None, referenceUrl=None, imageUrl=None):
-        super(Social, self).__init__(resourceId=resourceId)
+    def __init__(self, resourceId=None, type=None, author=None, referenceUrl=None, imageUrl=None, **kwargs):
+        super(Social, self).__init__(resourceId=resourceId, **kwargs)
         self.type = type
         self.author = author
         self.referenceUrl = referenceUrl
@@ -199,34 +214,39 @@ class ChannelItem(HasResourceMixin):
     pass
 
 
-class ResourceId(object):
-    def __init__(self, kind=None, videoId=None, channelId=None, playlistId=None):
+class ResourceId(BaseNestedField):
+    def __init__(self, kind=None, videoId=None, channelId=None, playlistId=None, **kwargs):
+        super(ResourceId, self).__init__(**kwargs)
         self.kind = kind
         self.videoId = videoId
         self.channelId = channelId
         self.playlistId = playlistId
 
 
-class PageInfo(object):
-    def __init__(self, totalResults=None, resultsPerPage=None):
+class PageInfo(BaseNestedField):
+    def __init__(self, totalResults=None, resultsPerPage=None, **kwargs):
+        super(PageInfo, self).__init__(**kwargs)
         self.totalResults = totalResults
         self.resultsPerPage = resultsPerPage
 
 
-class Timing(object):
-    def __init__(self, type=None, offsetMs=None):
+class Timing(BaseNestedField):
+    def __init__(self, type=None, offsetMs=None, **kwargs):
+        super(Timing, self).__init__(**kwargs)
         self.type = type
         self.offsetMs = offsetMs
 
 
-class Position(object):
-    def __init__(self, type=None, cornerPosition=None):
+class Position(BaseNestedField):
+    def __init__(self, type=None, cornerPosition=None, **kwargs):
+        super(Position, self).__init__(**kwargs)
         self.type = type
         self.cornerPosition = cornerPosition
 
 
-class RecordingDetails(object):
-    def __init__(self, locationDescription=None, location=None, recordingDate=None):
+class RecordingDetails(BaseNestedField):
+    def __init__(self, locationDescription=None, location=None, recordingDate=None, **kwargs):
+        super(RecordingDetails, self).__init__(**kwargs)
         self.locationDescription = locationDescription
         self.recordingDate = recordingDate
         self._location = location
@@ -235,16 +255,18 @@ class RecordingDetails(object):
         self.location = create_or_none(Location, self._location)
 
 
-class Location(object):
-    def __init__(self, latitude=None, longitude=None, altitude=None):
+class Location(BaseNestedField):
+    def __init__(self, latitude=None, longitude=None, altitude=None, **kwargs):
+        super(Location, self).__init__(**kwargs)
         self.altitude = altitude
         self.latitude = latitude
         self.longitude = longitude
 
 
-class VideoStreams(object):
+class VideoStreams(BaseNestedField):
     def __init__(self, widthPixels=None, heightPixels=None, frameRateFps=None,
-                 aspectRatio=None, codec=None, bitrateBps=None, rotation=None, vendor=None):
+                 aspectRatio=None, codec=None, bitrateBps=None, rotation=None, vendor=None, **kwargs):
+        super(VideoStreams, self).__init__(**kwargs)
         self.widthPixels = widthPixels
         self.heightPixels = heightPixels
         self.frameRateFps = frameRateFps
@@ -255,30 +277,34 @@ class VideoStreams(object):
         self.vendor = vendor
 
 
-class AudioStreams(object):
-    def __init__(self, channelCount=None, codec=None, bitrateBps=None, vendor=None):
+class AudioStreams(BaseNestedField):
+    def __init__(self, channelCount=None, codec=None, bitrateBps=None, vendor=None, **kwargs):
+        super(AudioStreams, self).__init__(**kwargs)
         self.channelCount = channelCount
         self.codec = codec
         self.bitrateBps = bitrateBps
         self.vendor = vendor
 
 
-class RecordingLocation(object):
-    def __init__(self, latitude=None, longitude=None, altitude=None):
+class RecordingLocation(BaseNestedField):
+    def __init__(self, latitude=None, longitude=None, altitude=None, **kwargs):
+        super(RecordingLocation, self).__init__(**kwargs)
         self.latitude = latitude
         self.longitude = longitude
         self.altitude = altitude
 
 
-class ProcessingProgress(object):
-    def __init__(self, partsTotal=None, partsProcessed=None, timeLeftMs=None):
+class ProcessingProgress(BaseNestedField):
+    def __init__(self, partsTotal=None, partsProcessed=None, timeLeftMs=None, **kwargs):
+        super(ProcessingProgress, self).__init__(**kwargs)
         self.partsTotal = partsTotal
         self.partsProcessed = partsProcessed
         self.timeLeftMs = timeLeftMs
 
 
-class TagSuggestions(object):
-    def __init__(self, tag=None, categoryRestricts=None):
+class TagSuggestions(BaseNestedField):
+    def __init__(self, tag=None, categoryRestricts=None, **kwargs):
+        super(TagSuggestions, self).__init__(**kwargs)
         self.tag = tag
         self.categoryRestricts = categoryRestricts
 
