@@ -12,7 +12,9 @@ def create_or_none(cls, value):
 
 
 def get_default_params():
-    params = {'key': API_KEY, 'headers': {'content-type': 'application/json'}}
+    params = {}
+    if API_KEY:
+        params['key'] = API_KEY
     return params
 
 
