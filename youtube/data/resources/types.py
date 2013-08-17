@@ -11,7 +11,6 @@ class ResourceType(object):
         self.etag = etag
         self._id = id
         self._snippet = snippet
-        self.parse()
 
     def parse(self):
         self.snippet = create_or_none(Snippet, self._snippet)
@@ -32,8 +31,8 @@ class ResourceType(object):
 
 class Activity(ResourceType):
     def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None):
-        self._contentDetails = contentDetails
         super(Activity, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+        self._contentDetails = contentDetails
 
     def parse(self):
         super(Activity, self).parse()
@@ -44,13 +43,13 @@ class Channel(ResourceType):
     def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None,
                  statistics=None, topicDetails=None, status=None, brandingSettings=None,
                  invideoPromotion=None, ):
+        super(Channel, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
         self._contentDetails = contentDetails
         self._statistics = statistics
         self._topicDetails = topicDetails
         self._status = status
         self._brandingSettings = brandingSettings
         self._invideoPromotion = invideoPromotion
-        super(Channel, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
 
     def parse(self):
         super(Channel, self).parse()
@@ -68,26 +67,26 @@ class GuideCategory(ResourceType):
 
 class PlaylistItem(ResourceType):
     def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, status=None):
+        super(PlaylistItem, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
         self._contentDetails = contentDetails
         self._status = status
-        super(PlaylistItem, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
 
     def parse(self):
+        super(PlaylistItem, self).parse()
         self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
         self.status = create_or_none(Status, self._status)
-        super(PlaylistItem, self).parse()
 
 
 class Playlist(PlaylistItem):
     def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, status=None, player=None):
-        self._player = player
         super(Playlist, self).__init__(kind=kind, etag=etag, id=id,
                                        snippet=snippet, contentDetails=contentDetails,
                                        status=status)
+        self._player = player
 
     def parse(self):
-        self.player = create_or_none(Player, self._player)
         super(Playlist, self).parse()
+        self.player = create_or_none(Player, self._player)
 
 
 class Search(ResourceType):
@@ -97,13 +96,14 @@ class Search(ResourceType):
 
 class Subscription(ResourceType):
     def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, subscriberSnippet=None):
+        super(Subscription, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
         self._contentDetails = contentDetails
         self._subscriberSnippet = subscriberSnippet
-        super(Subscription, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
 
     def parse(self):
+        super(Subscription, self).parse()
         self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
         self.subscriberSnippet = create_or_none(SubscriberSnippet, self._subscriberSnippet)
-        super(Subscription, self).parse()
+
 
 __author__ = 'lalo'
