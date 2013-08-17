@@ -10,9 +10,9 @@ OAuth 2.0 is not supported yet.
 
 Supported data APIs:
 
-Activity: list,
+Activity: list
 
-Channels: list,
+Channels: list
 
 GuideCategories: list
 
@@ -23,6 +23,10 @@ Playlists: list
 Search: list
 
 Subscriptions: list
+
+VideoCategories: list
+
+Videos: list
 
 
 Example:
@@ -40,12 +44,6 @@ Example:
     class Channels(ResourcePageInfo):
         url = CHANNELS_URL
         item_class = Channel
-        accepted = [
-            'categoryId', 'forUsername', 'id',
-            'managedByMe', 'mine', 'mySubscribers',
-            'maxResults', 'onBehalfOfContentOwner',
-            'pageToken', 'fields',
-        ]
 
     In [4]: channel  = channels_query.items[0]
 
