@@ -270,4 +270,11 @@ class RecordingLocation(object):
         self.altitude = altitude
 
 
+class ProcessingProgress(object):
+    def __init__(self, partsTotal=None, partsProcessed=None, timeLeftMs=None):
+        self.partsTotal = partsTotal
+        self.partsProcessed = partsProcessed
+        self.timeLeftMs = timeLeftMs
+
+
 __author__ = 'lalo'

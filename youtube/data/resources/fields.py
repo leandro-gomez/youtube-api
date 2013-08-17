@@ -5,7 +5,7 @@ from youtube.data.resources.nested_fields import (
     Timing, Upload, Like, Favorite,
     Subscription, Comment, PlayListItem,
     Recommendation, Bulletin, Social, ChannelItem,
-    RelatedPlaylists, Thumbnail, ResourceId, VideoStreams, AudioStreams, RecordingLocation)
+    RelatedPlaylists, Thumbnail, ResourceId, VideoStreams, AudioStreams, RecordingLocation, ProcessingProgress)
 from youtube.data.utils import create_or_none
 
 
@@ -199,5 +199,23 @@ class FileDetails(object):
         self.videoStreams = create_or_none(VideoStreams, self._videoStreams)
         self.audioStreams = create_or_none(AudioStreams, self._audioStreams)
         self.recordingLocation = create_or_none(RecordingLocation, self._recordingLocation)
+
+
+class ProcessingDetails(object):
+    def __init__(self, processingStatus=None, processingProgress=None, processingFailureReason=None,
+                 fileDetailsAvailability=None, processingIssuesAvailability=None, tagSuggestionsAvailability=None,
+                 editorSuggestionsAvailability=None, thumbnailsAvailability=None, ):
+        self.processingStatus = processingStatus
+        self._processingProgress = processingProgress
+        self.processingFailureReason = processingFailureReason
+        self.fileDetailsAvailability = fileDetailsAvailability
+        self.processingIssuesAvailability = processingIssuesAvailability
+        self.tagSuggestionsAvailability = tagSuggestionsAvailability
+        self.editorSuggestionsAvailability = editorSuggestionsAvailability
+        self.thumbnailsAvailability = thumbnailsAvailability
+
+    def parse(self):
+        self.processingProgress = create_or_none(ProcessingProgress, self._processingProgress)
+
 
 __author__ = 'lalo'
