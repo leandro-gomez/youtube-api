@@ -22,11 +22,15 @@ def error_factory(response):
 
 def get_params(**kwargs):
     params = get_default_params()
-    return params.update(kwargs)
+    params.update(kwargs)
+    return params
+
 
 
 def youtube_get(url, **kwargs):
+    print kwargs
     params = get_params(**kwargs)
+    print params
     response = requests.get(url, params=params)
     return response.json()
 
