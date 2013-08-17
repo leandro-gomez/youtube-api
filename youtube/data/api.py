@@ -49,7 +49,8 @@ class ResourceApi(object):
         return response.json()
 
     @classmethod
-    def list(cls, part, **kwargs):
+    def list(cls, part=('id',), **kwargs):
+        part = ",".join(part)
         response = cls.get(part, **kwargs)
 
         if 'error' in response:
@@ -115,5 +116,6 @@ class VideoCategoryApi(ResourceApi):
 class VideoApi(ResourcePageInfoApi):
     url = VIDEOS_URL
     item_class = Video
+
 
 __author__ = 'lalo'

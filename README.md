@@ -33,7 +33,7 @@ Example:
 
     In [1]: from data.api import Channels
 
-    In [2]: channels_query = Channels.list(part="id,snippet,brandingSettings,contentDetails,invideoPromotion,statistics,topicDetails", id="UCY-THBWXJ24cf-mXHr_nLYw")
+    In [2]: channels_query = Channels.list(part=("id","snippet","brandingSettings","contentDetails","invideoPromotion","statistics","topicDetails",), id="UCY-THBWXJ24cf-mXHr_nLYw")
 
     In [3]: channels_query??
 
