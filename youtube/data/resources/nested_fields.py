@@ -225,4 +225,21 @@ class Position(object):
         self.cornerPosition = cornerPosition
 
 
+class RecordingDetails(object):
+    def __init__(self, locationDescription=None, location=None, recordingDate=None):
+        self.locationDescription = locationDescription
+        self.recordingDate = recordingDate
+        self._location = location
+
+    def parse(self):
+        self.location = create_or_none(Location, self._location)
+
+
+class Location(object):
+    def __init__(self, latitude=None, longitude=None, altitude=None):
+        self.altitude = altitude
+        self.latitude = latitude
+        self.longitude = longitude
+
+
 __author__ = 'lalo'

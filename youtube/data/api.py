@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist, Search, Subscription, VideoCategory
+from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist, Search, Subscription, VideoCategory, Video
 from utils import youtube_get, error_factory, create_or_none
 from youtube.data.resources.nested_fields import PageInfo
 
@@ -111,5 +111,9 @@ class VideoCategoryApi(ResourceApi):
     url = VIDEO_CATEGORIES_URL
     item_class = VideoCategory
 
+
+class VideoApi(ResourcePageInfoApi):
+    url = VIDEOS_URL
+    item_class = Video
 
 __author__ = 'lalo'

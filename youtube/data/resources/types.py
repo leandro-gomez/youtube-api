@@ -2,6 +2,7 @@
 from youtube.data.resources.fields import (
     Snippet, ContentDetails, InvideoPromotion,
     BrandingSettings, Status, TopicDetails, Statistics, Player, ResourceID, SubscriberSnippet)
+from youtube.data.resources.nested_fields import RecordingDetails
 from youtube.data.utils import create_or_none
 
 
@@ -108,5 +109,35 @@ class Subscription(ResourceType):
 
 class VideoCategory(ResourceType):
     pass
+
+
+class Video(ResourceType):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None,
+                 status=None, statistics=None, player=None, topicDetails=None,
+                 recordingDetails=None, fileDetails=None, processingDetails=None,
+                 suggestions=None):
+        super(Video, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+        self._contentDetails = contentDetails
+        self._status = status
+        self._statistics = statistics
+        self._player = player
+        self._topicDetails = topicDetails
+        self._recordingDetails = recordingDetails
+        self._fileDetails = fileDetails
+        self._processingDetails = processingDetails
+        self._suggestions = suggestions
+
+    def parse(self):
+        super(Video, self).parse()
+        self.contentDetails = create_or_none(ContentDetails, self._contentDetails)
+        self.status = create_or_none(Status, self._status)
+        self.statistics = create_or_none(Statistics, self._statistics)
+        self.player = create_or_none(Player, self._player)
+        self.topicDetails = create_or_none(TopicDetails, self._topicDetails)
+        self.recordingDetails = create_or_none(RecordingDetails, self._recordingDetails)
+        #self.fileDetails = create_or_none(FileDetails, self._fileDetails)
+        #self.processingDetails = create_or_none(ProcessingDetails, self._processingDetails)
+        #self.suggestions = create_or_none(Suggestions, self._suggestions)
+
 
 __author__ = 'lalo'
