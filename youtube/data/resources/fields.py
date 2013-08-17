@@ -5,7 +5,7 @@ from youtube.data.resources.nested_fields import (
     Timing, Upload, Like, Favorite,
     Subscription, Comment, PlayListItem,
     Recommendation, Bulletin, Social, ChannelItem,
-    RelatedPlaylists, Thumbnail, ResourceId, VideoStreams, AudioStreams, RecordingLocation, ProcessingProgress)
+    RelatedPlaylists, Thumbnail, ResourceId, VideoStreams, AudioStreams, RecordingLocation, ProcessingProgress, TagSuggestions)
 from youtube.data.utils import create_or_none
 
 
@@ -217,5 +217,17 @@ class ProcessingDetails(object):
     def parse(self):
         self.processingProgress = create_or_none(ProcessingProgress, self._processingProgress)
 
+
+class Suggestions(object):
+    def __init__(self, processingErrors=None, processingWarnings=None, processingHints=None,
+                 tagSuggestions=None, editorSuggestions=None):
+        self.processingErrors = processingErrors
+        self.processingWarnings = processingWarnings
+        self.processingHints = processingHints
+        self._tagSuggestions = tagSuggestions or []
+        self.editorSuggestions = editorSuggestions
+
+    def parse(self):
+        self.tagSuggestions = [TagSuggestions(**tag) for tag in self._tagSuggestions]
 
 __author__ = 'lalo'

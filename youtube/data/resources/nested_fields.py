@@ -277,4 +277,10 @@ class ProcessingProgress(object):
         self.timeLeftMs = timeLeftMs
 
 
+class TagSuggestions(object):
+    def __init__(self, tag=None, categoryRestricts=None):
+        self.tag = tag
+        self.categoryRestricts = categoryRestricts
+
+
 __author__ = 'lalo'

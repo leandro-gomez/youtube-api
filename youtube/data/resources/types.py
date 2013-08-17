@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from youtube.data.resources.fields import (
     Snippet, ContentDetails, InvideoPromotion,
-    BrandingSettings, Status, TopicDetails, Statistics, Player, ResourceID, SubscriberSnippet, FileDetails, ProcessingDetails)
+    BrandingSettings, Status, TopicDetails, Statistics, Player, ResourceID, SubscriberSnippet, FileDetails, ProcessingDetails, Suggestions)
 from youtube.data.resources.nested_fields import RecordingDetails
 from youtube.data.utils import create_or_none
 
@@ -137,7 +137,7 @@ class Video(ResourceType):
         self.recordingDetails = create_or_none(RecordingDetails, self._recordingDetails)
         self.fileDetails = create_or_none(FileDetails, self._fileDetails)
         self.processingDetails = create_or_none(ProcessingDetails, self._processingDetails)
-        #self.suggestions = create_or_none(Suggestions, self._suggestions)
+        self.suggestions = create_or_none(Suggestions, self._suggestions)
 
 
 __author__ = 'lalo'
