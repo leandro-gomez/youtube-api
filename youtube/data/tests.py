@@ -37,7 +37,7 @@ def get_response(*args, **kwargs):
 
 class UtilsTest(TestCase):
     def test_youtube_get_returns_python_dict(self):
-        response = youtube_get('foo', get_method=get_response, key="bar", part="bas", id="foobar")
+        response = youtube_get('url', get_method=get_response, key="bar", part="bas", id="foobar")
         self.assertEqual(response, VALID_RESPONSE)
 
 

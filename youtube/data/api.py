@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist, Search, Subscription
+from resources.types import Activity, Channel, GuideCategory, PlaylistItem, Playlist, Search, Subscription, VideoCategory
 from utils import youtube_get, error_factory, create_or_none
 from youtube.data.resources.nested_fields import PageInfo
 
@@ -17,10 +17,12 @@ SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
 
 SUBSCRIPTIONS_URL = "https://www.googleapis.com/youtube/v3/subscriptions"
 
+VIDEO_CATEGORIES_URL = "https://www.googleapis.com/youtube/v3/videoCategories"
+
 VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos"
 
 
-class ResourceQuery(object):
+class ResourceApi(object):
     """
     Abstract class of Resource YouTube Data API
     """
@@ -57,52 +59,57 @@ class ResourceQuery(object):
         return query
 
 
-class ResourcePageInfo(ResourceQuery):
+class ResourcePageInfoApi(ResourceApi):
     def __init__(self, kind=None, etag=None, pageInfo=None, nextPageToken=None,
                  prevPageToken=None, items=None, **kwargs):
-        super(ResourcePageInfo, self).__init__(kind=kind, etag=etag, items=items, **kwargs)
+        super(ResourcePageInfoApi, self).__init__(kind=kind, etag=etag, items=items, **kwargs)
         self._pageInfo = pageInfo
         self.nextPageToken = nextPageToken
         self.prevPageToken = prevPageToken
 
     def parse(self):
-        super(ResourcePageInfo, self).parse()
+        super(ResourcePageInfoApi, self).parse()
         self.pageInfo = create_or_none(PageInfo, self._pageInfo)
 
 
-class Activities(ResourcePageInfo):
+class ActivityApi(ResourcePageInfoApi):
     url = ACTIVITIES_URL
     item_class = Activity
 
 
-class Channels(ResourcePageInfo):
+class ChannelApi(ResourcePageInfoApi):
     url = CHANNELS_URL
     item_class = Channel
 
 
-class GuideCategories(ResourceQuery):
+class GuideCategoryApi(ResourceApi):
     url = GUIDE_CATEGORIES_URL
     item_class = GuideCategory
 
 
-class PlaylistItems(ResourcePageInfo):
+class PlaylistItemApi(ResourcePageInfoApi):
     item_class = PlaylistItem
     url = PLAY_LIST_ITEM_URL
 
 
-class Playlists(ResourcePageInfo):
+class PlaylistApi(ResourcePageInfoApi):
     item_class = Playlist
     url = PLAY_LIST_URL
 
 
-class Searches(ResourcePageInfo):
+class SearchApi(ResourcePageInfoApi):
     url = SEARCH_URL
     item_class = Search
 
 
-class Subscriptions(ResourcePageInfo):
+class SubscriptionApi(ResourcePageInfoApi):
     url = SUBSCRIPTIONS_URL
     item_class = Subscription
+
+
+class VideoCategoryApi(ResourceApi):
+    url = VIDEO_CATEGORIES_URL
+    item_class = VideoCategory
 
 
 __author__ = 'lalo'

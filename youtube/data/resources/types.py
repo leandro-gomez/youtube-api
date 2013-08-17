@@ -106,4 +106,7 @@ class Subscription(ResourceType):
         self.subscriberSnippet = create_or_none(SubscriberSnippet, self._subscriberSnippet)
 
 
+class VideoCategory(ResourceType):
+    pass
+
 __author__ = 'lalo'
