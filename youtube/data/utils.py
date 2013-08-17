@@ -31,7 +31,7 @@ def get_params(**kwargs):
 def youtube_get(url, get_method=requests.get, **kwargs):
     params = get_params(**kwargs)
     response = get_method(url, params=params)
-    return response.json()
+    return response
 
 
 __author__ = 'lalo'

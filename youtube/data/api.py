@@ -43,7 +43,8 @@ class ResourceQuery(object):
 
     @classmethod
     def get(cls, part, **kwargs):
-        return youtube_get(cls.url, part=part, **kwargs)
+        response = youtube_get(cls.url, part=part, **kwargs)
+        return response.json()
 
     @classmethod
     def list(cls, part, **kwargs):

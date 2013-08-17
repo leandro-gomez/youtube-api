@@ -32,12 +32,7 @@ VALID_RESPONSE = {
 
 
 def get_response(*args, **kwargs):
-    class A(object):
-        pass
-
-    a = A()
-    a.json = lambda: VALID_RESPONSE
-    return a
+    return VALID_RESPONSE
 
 
 class UtilsTest(TestCase):
