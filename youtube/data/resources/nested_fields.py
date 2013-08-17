@@ -242,4 +242,32 @@ class Location(object):
         self.longitude = longitude
 
 
+class VideoStreams(object):
+    def __init__(self, widthPixels=None, heightPixels=None, frameRateFps=None,
+                 aspectRatio=None, codec=None, bitrateBps=None, rotation=None, vendor=None):
+        self.widthPixels = widthPixels
+        self.heightPixels = heightPixels
+        self.frameRateFps = frameRateFps
+        self.aspectRatio = aspectRatio
+        self.codec = codec
+        self.bitrateBps = bitrateBps
+        self.rotation = rotation
+        self.vendor = vendor
+
+
+class AudioStreams(object):
+    def __init__(self, channelCount=None, codec=None, bitrateBps=None, vendor=None):
+        self.channelCount = channelCount
+        self.codec = codec
+        self.bitrateBps = bitrateBps
+        self.vendor = vendor
+
+
+class RecordingLocation(object):
+    def __init__(self, latitude=None, longitude=None, altitude=None):
+        self.latitude = latitude
+        self.longitude = longitude
+        self.altitude = altitude
+
+
 __author__ = 'lalo'

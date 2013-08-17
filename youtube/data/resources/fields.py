@@ -5,7 +5,7 @@ from youtube.data.resources.nested_fields import (
     Timing, Upload, Like, Favorite,
     Subscription, Comment, PlayListItem,
     Recommendation, Bulletin, Social, ChannelItem,
-    RelatedPlaylists, Thumbnail, ResourceId)
+    RelatedPlaylists, Thumbnail, ResourceId, VideoStreams, AudioStreams, RecordingLocation)
 from youtube.data.utils import create_or_none
 
 
@@ -179,5 +179,25 @@ class SubscriberSnippet(BaseField):
     def parse(self):
         self.parse_thumbnails()
 
+
+class FileDetails(object):
+    def __init__(self, fileName=None, fileSize=None, fileType=None, container=None,
+                 videoStreams=None, audioStreams=None, durationMs=None, bitrateBps=None,
+                 recordingLocation=None, creationTime=None):
+        self.fileName = fileName
+        self.fileSize = fileSize
+        self.fileType = fileType
+        self.container = container
+        self._videoStreams = videoStreams
+        self._audioStreams = audioStreams or []
+        self.durationMs = durationMs
+        self.bitrateBps = bitrateBps
+        self._recordingLocation = recordingLocation
+        self.creationTime = creationTime
+
+    def parse(self):
+        self.videoStreams = create_or_none(VideoStreams, self._videoStreams)
+        self.audioStreams = create_or_none(AudioStreams, self._audioStreams)
+        self.recordingLocation = create_or_none(RecordingLocation, self._recordingLocation)
 
 __author__ = 'lalo'
