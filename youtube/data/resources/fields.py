@@ -183,7 +183,9 @@ class SubscriberSnippet(BaseField):
 class FileDetails(object):
     def __init__(self, fileName=None, fileSize=None, fileType=None, container=None,
                  videoStreams=None, audioStreams=None, durationMs=None, bitrateBps=None,
-                 recordingLocation=None, creationTime=None):
+                 recordingLocation=None, creationTime=None, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
         self.fileName = fileName
         self.fileSize = fileSize
         self.fileType = fileType
@@ -204,7 +206,9 @@ class FileDetails(object):
 class ProcessingDetails(object):
     def __init__(self, processingStatus=None, processingProgress=None, processingFailureReason=None,
                  fileDetailsAvailability=None, processingIssuesAvailability=None, tagSuggestionsAvailability=None,
-                 editorSuggestionsAvailability=None, thumbnailsAvailability=None, ):
+                 editorSuggestionsAvailability=None, thumbnailsAvailability=None, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
         self.processingStatus = processingStatus
         self._processingProgress = processingProgress
         self.processingFailureReason = processingFailureReason
@@ -220,7 +224,9 @@ class ProcessingDetails(object):
 
 class Suggestions(object):
     def __init__(self, processingErrors=None, processingWarnings=None, processingHints=None,
-                 tagSuggestions=None, editorSuggestions=None):
+                 tagSuggestions=None, editorSuggestions=None, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
         self.processingErrors = processingErrors
         self.processingWarnings = processingWarnings
         self.processingHints = processingHints
@@ -229,5 +235,6 @@ class Suggestions(object):
 
     def parse(self):
         self.tagSuggestions = [TagSuggestions(**tag) for tag in self._tagSuggestions]
+
 
 __author__ = 'lalo'
