@@ -9,9 +9,16 @@ from youtube.data.resources.nested_fields import (
 from youtube.data.utils import create_or_none
 
 
-class Snippet(object):
+class BaseField(object):
+    def __init__(self, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
+
+
+class Snippet(BaseField):
     def __init__(self, publishedAt=None, channelId=None, title=None, description=None, resourceId=None, tags=None,
-                 thumbnails=None, channelTitle=None, type=None, groupId=None, playlistId=None, position=None, ):
+                 thumbnails=None, channelTitle=None, type=None, groupId=None, playlistId=None, position=None, **kwargs):
+        super(Snippet, self).__init__(**kwargs)
         self._publishedAt = publishedAt
         self.channelId = channelId
         self.title = title
@@ -43,11 +50,12 @@ class Snippet(object):
             self.thumbnails = Thumbnail.parse(thumbnails)
 
 
-class ContentDetails(object):
+class ContentDetails(BaseField):
     def __init__(self, upload=None, like=None, favorite=None, comment=None, subscription=None,
                  playlistItem=None, recommendation=None, bulletin=None, social=None, itemCount=None,
                  channelItem=None, relatedPlaylists=None, googlePlusUserId=None, videoId=None,
-                 startAt=None, endAt=None, note=None):
+                 startAt=None, endAt=None, note=None, **kwargs):
+        super(ContentDetails, self).__init__(**kwargs)
         self._upload = upload
         self._like = like
         self._favorite = favorite
@@ -81,27 +89,31 @@ class ContentDetails(object):
         self.relatedPlaylists = create_or_none(RelatedPlaylists, self._relatedPlaylists)
 
 
-class Statistics(object):
-    def __init__(self, viewCount=None, commentCount=None, subscriberCount=None, videoCount=None):
+class Statistics(BaseField):
+    def __init__(self, viewCount=None, commentCount=None, subscriberCount=None, videoCount=None, **kwargs):
+        super(Statistics, self).__init__(**kwargs)
         self.viewCount = viewCount
         self.commentCount = commentCount
         self.subscriberCount = subscriberCount
         self.videoCount = videoCount
 
 
-class TopicDetails(object):
-    def __init__(self, topicIds=None):
+class TopicDetails(BaseField):
+    def __init__(self, topicIds=None, **kwargs):
+        super(TopicDetails, self).__init__(**kwargs)
         self.topicIds = topicIds
 
 
-class Status(object):
-    def __init__(self, privacyStatus=None, isLinked=None, ):
+class Status(BaseField):
+    def __init__(self, privacyStatus=None, isLinked=None, **kwargs):
+        super(Status, self).__init__(**kwargs)
         self.privacyStatus = privacyStatus
         self.isLinked = isLinked
 
 
-class BrandingSettings(object):
-    def __init__(self, channel=None, watch=None, image=None, hints=None):
+class BrandingSettings(BaseField):
+    def __init__(self, channel=None, watch=None, image=None, hints=None, **kwargs):
+        super(BrandingSettings, self).__init__(**kwargs)
         self._channel = channel
         self._watch = watch
         self._image = image
@@ -122,8 +134,9 @@ class BrandingSettings(object):
             self.hints = None
 
 
-class InvideoPromotion(object):
-    def __init__(self, timing=None, position=None, items=None):
+class InvideoPromotion(BaseField):
+    def __init__(self, timing=None, position=None, items=None, **kwargs):
+        super(InvideoPromotion, self).__init__(**kwargs)
         self._timing = timing
         self._position = position
         self.items = items
@@ -134,21 +147,24 @@ class InvideoPromotion(object):
         self.position = create_or_none(Position, self._position)
 
 
-class Player(object):
-    def __init__(self, embedHtml=None):
+class Player(BaseField):
+    def __init__(self, embedHtml=None, **kwargs):
+        super(Player, self).__init__(**kwargs)
         self.embedHtml = embedHtml
 
 
-class ResourceID(object):
-    def __init__(self, kind=None, videoId=None, channelId=None, playlistId=None):
+class ResourceID(BaseField):
+    def __init__(self, kind=None, videoId=None, channelId=None, playlistId=None, **kwargs):
+        super(ResourceID, self).__init__(**kwargs)
         self.kind = kind
         self.videoId = videoId
         self.channelId = channelId
         self.playlistId = playlistId
 
 
-class SubscriberSnippet(object):
-    def __init__(self, title=None, description=None, channelId=None, thumbnails=None):
+class SubscriberSnippet(BaseField):
+    def __init__(self, title=None, description=None, channelId=None, thumbnails=None, **kwargs):
+        super(SubscriberSnippet, self).__init__(**kwargs)
         self.title = title
         self.description = description
         self.channelId = channelId
