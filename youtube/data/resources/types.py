@@ -7,7 +7,9 @@ from youtube.data.utils import create_or_none
 
 
 class ResourceType(object):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
         self.kind = kind
         self.etag = etag
         self._id = id
@@ -31,8 +33,8 @@ class ResourceType(object):
 
 
 class Activity(ResourceType):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None):
-        super(Activity, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, **kwargs):
+        super(Activity, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet, **kwargs)
         self._contentDetails = contentDetails
 
     def parse(self):
@@ -43,8 +45,8 @@ class Activity(ResourceType):
 class Channel(ResourceType):
     def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None,
                  statistics=None, topicDetails=None, status=None, brandingSettings=None,
-                 invideoPromotion=None, ):
-        super(Channel, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+                 invideoPromotion=None, **kwargs):
+        super(Channel, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet, **kwargs)
         self._contentDetails = contentDetails
         self._statistics = statistics
         self._topicDetails = topicDetails
@@ -67,8 +69,8 @@ class GuideCategory(ResourceType):
 
 
 class PlaylistItem(ResourceType):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, status=None):
-        super(PlaylistItem, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, status=None, **kwargs):
+        super(PlaylistItem, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet, **kwargs)
         self._contentDetails = contentDetails
         self._status = status
 
@@ -79,10 +81,10 @@ class PlaylistItem(ResourceType):
 
 
 class Playlist(PlaylistItem):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, status=None, player=None):
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, status=None, player=None, **kwargs):
         super(Playlist, self).__init__(kind=kind, etag=etag, id=id,
                                        snippet=snippet, contentDetails=contentDetails,
-                                       status=status)
+                                       status=status, **kwargs)
         self._player = player
 
     def parse(self):
@@ -96,8 +98,8 @@ class Search(ResourceType):
 
 
 class Subscription(ResourceType):
-    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, subscriberSnippet=None):
-        super(Subscription, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+    def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None, subscriberSnippet=None, **kwargs):
+        super(Subscription, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet, **kwargs)
         self._contentDetails = contentDetails
         self._subscriberSnippet = subscriberSnippet
 
@@ -115,8 +117,8 @@ class Video(ResourceType):
     def __init__(self, kind=None, etag=None, id=None, snippet=None, contentDetails=None,
                  status=None, statistics=None, player=None, topicDetails=None,
                  recordingDetails=None, fileDetails=None, processingDetails=None,
-                 suggestions=None):
-        super(Video, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet)
+                 suggestions=None, **kwargs):
+        super(Video, self).__init__(kind=kind, etag=etag, id=id, snippet=snippet, **kwargs)
         self._contentDetails = contentDetails
         self._status = status
         self._statistics = statistics
